@@ -22,7 +22,6 @@ import mx.uam.tsbd.onlineStore.negocio.model.Carrito;
 /**
  * Controlador para el API rest
  * 
- * @author erick
  *
  */
 @RestController

@@ -11,11 +11,6 @@ import mx.uam.tsbd.onlineStore.datos.LibroRepository;
 import mx.uam.tsbd.onlineStore.negocio.model.Carrito;
 import mx.uam.tsbd.onlineStore.negocio.model.Libro;
 
-
-/**
- * @author erick
- *
- */
 @Service
 @Slf4j
 public class CarritoService {
@@ -52,7 +47,7 @@ public class CarritoService {
 	/**
 	 * 
 	 * @param Id
-	 * @return Pokemon al que le pertenece la matricula
+	 * @return Carrito al que le pertenece el id
 	 */
 	public Carrito retrive(Integer Id){
 		log.info("Llamado a regresar al Carrito con id "+Id);

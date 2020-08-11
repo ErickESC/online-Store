@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 
-public class Informacion_Tarjeta {
+public class Tarjeta {
 	
 	@Id 
 	private Integer IdTarjeta;

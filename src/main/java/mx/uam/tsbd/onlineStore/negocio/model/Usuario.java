@@ -53,13 +53,13 @@ public class Usuario {
 	@Builder.Default
 	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "Info_Tarjeta")
-	private List <Informacion_Tarjeta> tarjetas = new ArrayList <> ();
+	private List <Tarjeta> tarjetas = new ArrayList <> ();
 	
-	public boolean addTarjeta(Informacion_Tarjeta tarjeta) {
+	public boolean addTarjeta(Tarjeta tarjeta) {
 		return tarjetas.add(tarjeta);
 	}
 	
-	public boolean quitTarjeta(Informacion_Tarjeta tarjeta) {
+	public boolean quitTarjeta(Tarjeta tarjeta) {
 		return tarjetas.remove(tarjeta);
 	}
 
@@ -70,9 +70,5 @@ public class Usuario {
 	
 	public boolean addCompra(Venta compra) {
 		return compras.add(compra);
-	}
-	
-	public boolean quitCompra(Venta compra) {
-		return compras.remove(compra);
 	}
 }
