@@ -2,7 +2,6 @@ package mx.uam.tsbd.onlineStore.negocio.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,11 +18,4 @@ public class Informacion_Tarjeta {
 	
 	@Id 
 	private Integer IdTarjeta;
-	
-	@NotNull
-	private Integer IdUsuario;
-	
-	@NotNull
-	private Double Cantidad;
-
 }
