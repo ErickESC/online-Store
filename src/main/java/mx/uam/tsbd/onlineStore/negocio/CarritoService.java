@@ -143,4 +143,33 @@ public class CarritoService {
 		
 		return true;
 	}
+	
+	/**
+	 * 
+	 * @param carritoId
+	 * @param libroId
+	 * @return
+	 */
+	public boolean quitLibroFromCarrito(Integer carritoId, Integer libroId) {
+		
+		Libro libro = libroService.Retrive(libroId);
+		
+		Optional <Carrito> carritoOpt = carritoRepository.findById(carritoId);
+		
+		if(!carritoOpt.isPresent() || libro == null) {
+			
+			return false;
+		}
+
+		Carrito carrito = carritoOpt.get();
+		carrito.quitLibro(libro);
+		
+		libro.quitCarrito(carrito);
+		
+		// Persistir el cambio
+		libroRepository.save(libro);
+		carritoRepository.save(carrito);
+		
+		return true;
+	}
 }
