@@ -71,4 +71,8 @@ public class Usuario {
 	public boolean addCompra(Venta compra) {
 		return compras.add(compra);
 	}
+	
+	public boolean quitCompra(Venta compra) {
+		return compras.remove(compra);
+	}
 }

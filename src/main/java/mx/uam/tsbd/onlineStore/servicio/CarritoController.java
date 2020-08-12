@@ -90,7 +90,7 @@ public class CarritoController {
 		if(carrito != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(carrito);
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro grupo de cuidado");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro Carrito");
 		}
 	}
 	
@@ -158,15 +158,15 @@ public class CarritoController {
 	/**
 	 * POST /carritos/add/id del Carrito/libros/id del libro
 	 * 
-	 * @param nuevoGrupo
+	 * @param nuevoCarrito
 	 * @return OK si se agrego con exito o No content en caso contrario
 	 */
 	@ApiOperation(
 			value = "Agregar un libro a un Carrito",
 			notes = "Permite Agregar un libro a un carrito"
 			)
-	@PostMapping(path = "/carritos/add/{trainerId}/libros/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <?> addLibroToCarrito(@PathVariable("trainerId") Integer idCarrito, @PathVariable("id") Integer libroID) {
+	@PostMapping(path = "/carritos/add/{carritoId}/libros/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <?> addLibroToCarrito(@PathVariable("carritoId") Integer idCarrito, @PathVariable("id") Integer libroID) {
 		
 		log.info("Recibí llamada a addlibro con carrito"+ idCarrito +" y libro: "+libroID);
 		
@@ -182,15 +182,15 @@ public class CarritoController {
 	/**
 	 * POST /carritos/quit/id del Carrito/libros/id del libro
 	 * 
-	 * @param nuevoGrupo
-	 * @return OK si se agrego con exito o No content en caso contrario
+	 * @param nuevoCarrito
+	 * @return OK si se elimino con exito o No content en caso contrario
 	 */
 	@ApiOperation(
 			value = "Eliminar un libro de un Carrito",
 			notes = "Permite eliminar un libro de un carrito"
 			)
-	@PostMapping(path = "/carritos/quit/{trainerId}/libros/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <?> quitLibroFromCarrito(@PathVariable("trainerId") Integer idCarrito, @PathVariable("id") Integer libroID) {
+	@PostMapping(path = "/carritos/quit/{carritoId}/libros/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <?> quitLibroFromCarrito(@PathVariable("carritoId") Integer idCarrito, @PathVariable("id") Integer libroID) {
 		
 		log.info("Recibí llamada a quitlibro con carrito"+ idCarrito +" y libro: "+libroID);
 		

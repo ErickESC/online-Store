@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import mx.uam.tsbd.onlineStore.datos.UsuarioRepository;
 import mx.uam.tsbd.onlineStore.negocio.model.Carrito;
+import mx.uam.tsbd.onlineStore.negocio.model.Libro;
 import mx.uam.tsbd.onlineStore.negocio.model.Tarjeta;
 import mx.uam.tsbd.onlineStore.negocio.model.Usuario;
 import mx.uam.tsbd.onlineStore.negocio.model.Venta;
@@ -191,6 +192,32 @@ public class UsuarioService {
 		usuario.addCompra(venta);
 		
 		
+		
+		// Persistir el cambio
+		usuarioRepository.save(usuario);
+		
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param usuarioId
+	 * @param ventaId
+	 * @return
+	 */
+	public boolean quitVentaFromUsuario(Integer usuarioId, Integer ventaId) {
+		
+		Venta venta = ventaService.retrive(ventaId);
+		
+		Optional <Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
+		
+		if(!usuarioOpt.isPresent() || venta == null) {
+			
+			return false;
+		}
+
+		Usuario usuario = usuarioOpt.get();
+		usuario.quitCompra(venta);
 		
 		// Persistir el cambio
 		usuarioRepository.save(usuario);
