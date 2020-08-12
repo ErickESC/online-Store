@@ -52,11 +52,16 @@ public class LibroController {
 				
 		
 	}
-		
+		/**
+		 * 
+		 * EN CASO DE SER EL MAIN
+		 *
 		@GetMapping("/")
 		public String index() {
 			return "libros";
-		}
+		}*/
+		
+		
 		//cargar el archivo pdf 
 		@PostMapping("/libros")
 		public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attributes)

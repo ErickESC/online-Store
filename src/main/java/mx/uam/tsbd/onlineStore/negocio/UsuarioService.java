@@ -2,6 +2,7 @@ package mx.uam.tsbd.onlineStore.negocio;
 
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,14 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
+	
 	@Autowired
 	private TarjetaService tarjetaService;
 	
 	@Autowired
 	private VentaService ventaService;
+	
+
 	
 	/**
 	 * 
