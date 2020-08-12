@@ -18,12 +18,12 @@ public class Main_Controller {
 		return "index";
 	}
 	
-	@GetMapping("/adopcion")
-	public String adopcion() {
+	@GetMapping("/catalogo")
+	public String catalogo() {
 		
-		log.info("se invoco el metodo adopcion()");
+		log.info("se invoco el metodo catalogo()");
 		
-		return "adopcion";
+		return "catalogo";
 	}
 	
 	@GetMapping("/reclutamiento")
@@ -57,5 +57,4 @@ public class Main_Controller {
 		
 		return "enfermera";
 	}
-
 }

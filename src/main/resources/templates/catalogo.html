@@ -17,7 +17,7 @@
 
         <!--Titulo de la página-->
         <link rel="shortcut icon" href="img/iconos/pokemon16.png"> 
-        <title>AdoptPokemon</title>
+        <title>OnlineBookStore</title>
     </head>
     <body>
 
@@ -35,7 +35,7 @@
 
        		var lista;
        		
-       		var URL = "http://localhost:8080/adopciones";
+       		var URL = "http://localhost:8080/libros";
        		
        		console.log("Ready");
 	       	
@@ -46,7 +46,7 @@
 		          		// Recorre los objetos
 		          		var i;
 		                
-		          		var lista = Grupos[0].pokemons;
+		          		var lista = Grupos;
 		          		
 		          		for (i=0;i<lista.length;i++) {
 		    	     		var element = lista[i].information;
