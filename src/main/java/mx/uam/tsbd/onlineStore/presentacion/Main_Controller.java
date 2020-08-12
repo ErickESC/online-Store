@@ -17,5 +17,45 @@ public class Main_Controller {
 		
 		return "index";
 	}
+	
+	@GetMapping("/adopcion")
+	public String adopcion() {
+		
+		log.info("se invoco el metodo adopcion()");
+		
+		return "adopcion";
+	}
+	
+	@GetMapping("/reclutamiento")
+	public String reclutamiento() {
+		
+		log.info("se invoco el metodo reclutamiento()");
+		
+		return "reclutamiento";
+	}
+	
+	@GetMapping("/registro")
+	public String registro() {
+		
+		log.info("se invoco el metodo registro()");
+		
+		return "registro";
+	}
+	
+	@GetMapping("/administrador")
+	public String administrador() {
+		
+		log.info("se invoco el metodo administrador()");
+		
+		return "administrador";
+	}
+	
+	@GetMapping("/enfermera")
+	public String enfermera() {
+		
+		log.info("se invoco el metodo enfermera()");
+		
+		return "enfermera";
+	}
 
 }
