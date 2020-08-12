@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import mx.uam.tsbd.onlineStore.datos.UsuarioRepository;
 import mx.uam.tsbd.onlineStore.negocio.model.Carrito;
-import mx.uam.tsbd.onlineStore.negocio.model.Libro;
 import mx.uam.tsbd.onlineStore.negocio.model.Tarjeta;
 import mx.uam.tsbd.onlineStore.negocio.model.Usuario;
 import mx.uam.tsbd.onlineStore.negocio.model.Venta;

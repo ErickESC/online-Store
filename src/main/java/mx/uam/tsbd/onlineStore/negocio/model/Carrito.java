@@ -38,10 +38,13 @@ public class Carrito {
 	private List <Libro> libros = new ArrayList <> ();
 	
 	public boolean addLibro(Libro libro) {
+		
 		return libros.add(libro);
 	}
 	
 	public boolean quitLibro(Libro libro) {
 		return libros.remove(libro);
 	}
+	
+	
 }

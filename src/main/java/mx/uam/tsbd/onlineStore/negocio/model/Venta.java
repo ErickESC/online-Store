@@ -62,4 +62,13 @@ public class Venta {
 	public boolean quitLibro(Libro libro) {
 		return libros.remove(libro);
 	}
+	
+	@Builder.Default
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "carrito")
+	private List <Carrito> carritos = new ArrayList <> ();
+	
+	public boolean addCarrito(Carrito carrito) {
+		return carritos.add(carrito);
+	}
 }

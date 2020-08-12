@@ -9,7 +9,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
 import mx.uam.tsbd.onlineStore.datos.LibroRepository;
 import mx.uam.tsbd.onlineStore.negocio.model.Libro;
 
@@ -80,6 +79,15 @@ public class LibroService {
 			return true;
 		}else 
 			return false;
+	}
+	
+	public Double precio(Integer idlibro)
+	{
+		Libro libro =new Libro();
+		
+		Double preciolibro=libro.getPrecio();
+		
+		return preciolibro;
 	}
 
 }

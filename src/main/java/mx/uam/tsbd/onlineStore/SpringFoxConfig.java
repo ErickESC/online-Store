@@ -28,11 +28,11 @@ public class SpringFoxConfig {
 	
 	private ApiInfo apiInfo() {
 	    return new ApiInfo(
-	      "PrestaMax API REST", 
-	      "Proyecto TSIS2020", 
+	      "online store", 
+	      "Proyecto TSBD", 
 	      "API TOS", 
 	      "Terms of service", 
-	      new Contact("Erick Escandon", "Susan Cerón", null), 
+	      new Contact("Erick Escandon, Susan Ceron",null, null), 
 	      "License of API", "API license URL", Collections.emptyList());
     }
 }
