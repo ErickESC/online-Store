@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import io.swagger.annotations.ApiOperation;
 import mx.uam.tsbd.onlineStore.negocio.LibroService;
 import mx.uam.tsbd.onlineStore.negocio.model.Libro;
 
@@ -32,6 +33,10 @@ public class LibroController {
 	@Autowired
 	  private LibroService libroService;
 
+	@ApiOperation(
+			value = "Crear nuevo Libro",
+			notes = "Permite crear un nuevo Libro"
+			)
 		@PostMapping(path="/libros", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity <?> Create(@RequestBody @Valid Libro nuevoLibro)
 				
@@ -47,17 +52,12 @@ public class LibroController {
 				}
 				
 		
-	}
-		/**
-		 * 
-		 * EN CASO DE SER EL MAIN
-		 *
-		@GetMapping("/")
-		public String index() {
-			return "libros";
-		}*/
+	}	
 		
-		
+	@ApiOperation(
+			value = "Cargar un Archivo PDF",
+			notes = "Permite Cargar un Archivo PDF"
+			)
 		//cargar el archivo pdf 
 		@PostMapping("/libros")
 		public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attributes)
@@ -85,6 +85,10 @@ public class LibroController {
 		}
 		
 		
+	@ApiOperation(
+			value = "Regresa Todos los libros",
+			notes = "Permite regresar todos los Libros"
+			)
 	    @GetMapping(path = "/libros", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity <?> retrieveAll() {
 			
@@ -94,9 +98,10 @@ public class LibroController {
 			
 		}
 		
-		
-	    
-	    
+	@ApiOperation(
+			value = "Regresa Libro",
+			notes = "Permite Regresar el Libro solicitado"
+			)
 		@GetMapping(path = "/libros/{IdLibro}", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity <?> retrieve(@PathVariable("IdLibro") Integer IdLibro) {
 			
@@ -112,8 +117,10 @@ public class LibroController {
 			
 		}
 		
-		
-		
+	@ApiOperation(
+			value = "Actualiza Libro",
+			notes = "Permite Actualizar el Libro solicitado"
+			)
 		@PutMapping(path = "libros/{IdLibro}", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity <?> update(@PathVariable("IdLibro") Integer IdLibro,@RequestBody Libro actualizaLibro)
 		{
@@ -128,6 +135,10 @@ public class LibroController {
 	 		}
 		}
 		
+	@ApiOperation(
+			value = "Elimina Libro",
+			notes = "Permite Eliminar el Libro solicitado"
+			)
 		@DeleteMapping(path = "/libros/{IdLibro}")
 		public ResponseEntity<?> delete(@PathVariable("IdLibro") @Valid Integer IdLibro) {
 			
