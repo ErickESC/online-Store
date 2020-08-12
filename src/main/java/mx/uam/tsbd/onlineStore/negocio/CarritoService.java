@@ -1,5 +1,6 @@
 package mx.uam.tsbd.onlineStore.negocio;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class CarritoService {
 	
 	@Autowired
 	private LibroService libroService;
+	
+	@Autowired
+	private VentaService ventaService;
 	
 	@Autowired
 	private LibroRepository libroRepository;
@@ -134,7 +138,13 @@ public class CarritoService {
 		
 		// Persistir el cambio
 		libroRepository.save(libro);
+		
 		carritoRepository.save(carrito);
+		
+		Double precio=libroService.precio(libroId);
+		
+	     ventaService.totalcompraadd(precio);
+		
 		
 		return true;
 	}
@@ -165,6 +175,12 @@ public class CarritoService {
 		libroRepository.save(libro);
 		carritoRepository.save(carrito);
 		
+		Double precio=libroService.precio(libroId);
+		
+	     ventaService.totalcompraresta(precio);
+		
 		return true;
 	}
+	
+	
 }

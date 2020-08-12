@@ -81,5 +81,14 @@ public class LibroService {
 		}else 
 			return false;
 	}
+	
+	public Double precio(Integer idlibro)
+	{
+		Libro libro =new Libro();
+		
+		Double preciolibro=libro.getPrecio();
+		
+		return preciolibro;
+	}
 
 }
