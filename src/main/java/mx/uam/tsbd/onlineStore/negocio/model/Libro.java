@@ -29,6 +29,9 @@ public class Libro {
 	private Integer IdLibro;
 	
 	@NotBlank
+	private String imagen;
+	
+	@NotBlank
 	private String Autor;
 	
 	@NotBlank
