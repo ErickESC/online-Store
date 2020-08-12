@@ -49,30 +49,30 @@
 		          		var lista = Grupos;
 		          		
 		          		for (i=0;i<lista.length;i++) {
-		    	     		var element = lista[i].information;
-		            		var pokemon = lista[i];
+		    	     		var element = lista[i];
 		    	     		
 		             		console.log(element);
 		             		
 		             		//Se asigna el indice al id del elemento
 		          	 		
 		             	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
-		             		$("#"+i).append($("<img src=\""+element.image+"\" class=\"card-img-top\" alt=\"...\">"
+		             		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
 		         			
 		          	 		+"<div class=\"card-body\">"
-		             			+"<h5 class=\"card-title\">Nombre: "+element.name+"</h5>"
-		             			+"<p class=\"card-text\">Descripción: "+element.description+"</p>"
+		          	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
+		             			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
+		             			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
+		             			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
 		             		+"</div>"
 		             		
 			                +"<ul class=\"list-group list-group-flush\">"
-			                  +"<li class=\"list-group-item\">Tipo: principal-"+element.first+", secundario-"+element.second+"</li>"
-			                  +"<li class=\"list-group-item\">Sexo: "+element.gender+"</li>"
-			                  +"<li class=\"list-group-item\">Estatus: "+pokemon.status+"</li>"
+			                  +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
+			                  +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
 			                +"</ul>"
 		             		
 			                +"<div class=\"card-body\">"
-			                  +"<a href=\"#\" class=\"card-link\">Adoptar</a>"
-			                  +"<a href=\"#\" class=\"card-link\">Ver más</a>"
+			                  +"<a href=\"#\" class=\"card-link\">Comprar</a>"<!--AGREGAR REFERENCIA A VENTA-->
+			                  +"<a href=\"#\" class=\"card-link\">Agregar al carrito</a>"<!--AGREGAR REFERENCIA A CARRITO-->
 			                +"</div>" 
 			                
 		             	   +"</div>")); 
@@ -88,8 +88,8 @@
               <p>Contenido de la Página</p>
               <ul class="menu-header">
                  <!--  <li><img src="img/iconos/pokemon16.png" alt=""> <a href="/">Inicio</a></li>-->
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="#">Adopción</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento">Reclutamiento</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="#">Catalogo</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento">Inicio Sesion</a></li>
                 <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro">Regístrate</a></li>
               </ul>
             </div>
@@ -98,7 +98,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <h2 class="titulo-principal">AdoptPokemon</h2>
+            <h2 class="titulo-principal">Changarro!</h2>
             <img src="img/iconos/pokemon32.png" alt="">
             
           </nav>
@@ -114,13 +114,13 @@
           <div class="container contenedor-footer">
               <nav class="navegacion-footer">
                   <a href="/">Inicio</a>
-                  <a href="#">Adopción</a>
-                  <a href="reclutamiento">Reclutamiento</a>
+                  <a href="#">Catalogo</a>
+                  <a href="reclutamiento">Inicio Sesion</a>
                
                   <a href="registro.html">Regístrate</a>
               </nav>
 
-              <p class="copyright">Todos los Derechos Reservados EquipoRocket 2020 &copy;</p>
+              <p class="copyright">Todos los Derechos Reservados Erick y Susan 2020 &copy;</p>
           </div>
         </footer>
         
