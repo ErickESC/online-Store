@@ -17,66 +17,266 @@
 
         <!--Titulo de la página-->
         <link rel="shortcut icon" href="img/iconos/pokemon16.png"> 
-        <title>AdoptPokemon</title>
+        <title>Changarro!</title>
     </head>
     <body>
-    <script>
-    	$(document).ready(function(){
-       		
-    		$.ajaxSetup({contentType: "application/json; charset=utf-8"});
+    
+	<!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-       		var lista;
+    <script>
+    
+ 	//Variables globales para guardar los valores de los inputs
+ 	var idlibro= "ID sin definir";
+ 	var autor = "Autor sin definir";
+ 	var titulo = "Titulo sin definir";
+ 	var editorial= "Editorial sin definir";
+ 	var precio = "Precio sin definir";
+ 	var edicicion = "Edicion sin definir";
+ 	var npaginas = "NoPaginas sin definir";
+ 	var sinopsis = "Sinopsis sin definir";
+ 	var cantidad = "Cantidad sin definir";
+ 	var imagen = "Imagen sin definir";
+ 	
+ 	//Guardamos los valores de los inputs
+ 	function guarda(type) {
+	  
+	  if (type == "IL") {
+		  	idlibro = document.getElementById("idLibro").value;
+	    	console.log(this.idlibro);
+	  }
+	  if (type == "A") {
+		  	autor = document.getElementById("Autor").value;
+		    console.log(this.autor);
+	  }
+	  if (type == "T") {
+		  	titulo = document.getElementById("Titulo").value;
+		    console.log(this.titulo);
+	  }
+	  if (type == "E") {
+		  	editorial = document.getElementById("Editorial").value;
+	    	console.log(this.editorial);
+	  }
+	  if (type == "P") {
+		    precio = document.getElementById("Precio").value;
+		    console.log(this.precio);
+	  }
+	  if (type == "ED") {
+		    edicion = document.getElementById("Edicion").value;
+		    console.log(this.edicion);
+	  }
+	  if (type == "S") {
+	    	sinopsis = document.getElementById("Sinopsis").value;
+	    	console.log(this.sinopsis);
+	  }
+	  if (type == "N") {
+		    npaginas = document.getElementById("numeroPaginas").value;
+		    console.log(this.npaginas);
+	  }
+	  if (type == "C") {
+		    cantidad = document.getElementById("Cantidad").value;
+		    console.log(this.cantidad);
+	  }
+	  if (type == "I") {
+		    imagen = document.getElementById("Imagen").value;
+		    console.log(this.imagen);
+	  }
+	}
+
+ 	//Variable con la URL principal
+ 	var URL = "http://localhost:8080/libros";
+ 	
+ 	
+	$(document).ready(function(){
+   		
+		$.ajaxSetup({contentType: "application/json; charset=utf-8"});
+		
+   		//Variable para poder usar la list fuera de la funcion
+   		var lista;
+   		
+   		//Al hacer click en algun boton se detonara esta funcion
+		$("button").click(function(){
+		  //Obtenemos el id de la Funcion
+          var ID= $(this).attr("id");
+ 		  
+		  //Se actuara de acuerdo al id del boton
+		  switch (ID) {
+					case '1':
+						console.log("Se invoco creaLibro()");
+						creaLibro();
+						break;
+					case '2':
+						console.log("Se invoco actualizaLibro()");
+						actualizaLibro();
+						break;
+					case '3':
+						console.log("Se invoco cargaLibro()");
+						cargaLibro();
+						break;
+					case '4':
+						console.log("Se invoco borraLibro()");
+						borraLibro();
+						break;
+					case '5':
+						console.log("Se invoco Recupera todos()");
+						recuperaTodos();
+						break;
+		  }
+  		});
+		
+       	function creaLibro(){
+      		
+				$("#contenido").empty();
+				
+				var Libro = JSON.stringify({ autor: this.autor,
+					  						 cantidad: this.cantidad,
+					  						 descripcion: this.sinopsis,
+					  						 edicion: this.edicion,
+					 						 editorial: this.editorial,
+					 						 idLibro: this.idlibro,
+					 						 imagen: this.imagen,
+					 						 noPaginas: this.npaginas,
+					 						 precio: this.precio,
+					 						 titulo: this.titulo							
+											});
+
+				//Imprimimos en consola el json generado
+				console.log(Libro);
+				
+				$.ajax({url: URL, 
+		    		method: 'POST',
+		    		data: Libro,
+		    		success: cargaLibro
+		    	});
+				
+				
+ 		}
+		
+       	function actualizaLibro(){
+      		
+				$("#contenido").empty();
+				
+				var url = URL+"/"+this.idlibro;
+				
+				var Libro = JSON.stringify({ idLibro: this.idlibro})
+				
+				//Imprimimos en consola el json generado
+				console.log(Libro);
+				
+				$.ajax({url: url, 
+		    		method: 'PUT',
+		    		data: Libro,
+		    		success: cargaLibro
+		    	});
+				
+ 		}
+		
+       	function cargaLibro(){
        		
-       		var URL = "http://localhost:8080/pokemons";
-       		
-       		console.log("Ready");
-	       	
-       		$.get(URL,cargaGrupo);
-       		
-	       	function cargaGrupo(Grupos){
-	          			
-		          		// Recorre los objetos
-		          		var i;
-		                
-		          		var lista = Grupos[0].pokemons;
-		          		
-		          		for (i=0;i<lista.length;i++) {
-		    	     		var element = lista[i].information;
-		            		var pokemon = lista[i];
-		    	     		
-		             		console.log(element);
-		             		
-		             		//Se asigna el indice al id del elemento
-		          	 		
-		             		$("#contenido").append($("<div>"));
-		             		
-		             		$("#contenido").append($("<img src=\""+element.image+"\" class=\"card-img-top\" alt=\"...\">"
-		         			
-		          	 		+"<div class=\"card-body\">"
-		             			+"<h5 class=\"card-title\">Nombre: "+element.name+"</h5>"
-		             			+"<p class=\"card-text\">Descripción: "+element.description+"</p>"
-		             		+"</div>"
-		             		
-			                +"<ul class=\"list-group list-group-flush\">"
-			                  +"<li class=\"list-group-item\">Tipo: principal-"+element.first+", secundario-"+element.second+"</li>"
-			                  +"<li class=\"list-group-item\">Sexo: "+element.gender+"</li>"
-			                  +"<li class=\"list-group-item\">Estatus: "+pokemon.status+"</li>"
-			                +"</ul>"
-		             		
-			                +"<div class=\"card-body\">"
-			                  +"<a href=\"#\" class=\"card-link\">Adoptar</a>"
-			                  +"<a href=\"#\" class=\"card-link\">Ver más</a>"
-		             		
-			                +"</div>" 
-		             	   +"</div>")); 
-		          		} 
-		     }
-    	});
-    	</script>
-	
-		<!-- jQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-    	</script>
+				$("#contenido").empty();
+				
+				$.ajax({url: URL, 
+		    		method: 'GET',
+		    		success: cargaUnLibro
+		    	});
+				
+ 		}
+		
+       	function borraLibro(){
+      		
+				$("#contenido").empty();
+				
+				var url = URL+"/"+parseInt(this.idlibro);
+				
+				var libro = JSON.stringify({ idLibro: parseInt(this.idlibro) })
+				
+				$.ajax({url: url, 
+		    		method: 'DELETE',
+		    		data: libro
+		    	});
+ 		}
+       	
+       	function recuperaTodos(){
+				  
+					$.ajax({url: URL, 
+	     		    		method: 'GET',
+	     		    		success: cargaLibros
+	     		    });
+       	}
+
+       	function cargaLibros(Libros){
+  			
+      		// Recorre los objetos
+      		var i;
+            
+      		lista = Libros;
+      		
+      		for (i=0;i<lista.length;i++) {
+	     		var element = lista[i];
+	     		
+         		console.log(element);
+         		
+         		//Se asigna el indice al id del elemento
+      	 		
+         	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
+         		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
+     			
+      	 		+"<div class=\"card-body\">"
+      	 			+"<h5 class=\"card-title\">Precio: "+element.idLibro+"</h5>"
+      	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
+         			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
+         			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
+         			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
+         			+"<p class=\"card-text\">Editorial: "+element.cantidad+"</p>"
+         		+"</div>"
+         		
+                +"<ul class=\"list-group list-group-flush\">"
+                  +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
+                  +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
+                +"</ul>"
+                
+         	   +"</div>")); 
+      		} 
+ 		}
+       	
+       	function cargaUnLibro(Libros){
+  			
+      		// Recorre los objetos
+      		var i;
+            
+      		lista = Libros;
+      		
+      		for (i=0;i<lista.length;i++) {
+	     		var element = lista[i];
+	     		
+	     		if(element.idLibro == this.idlibro){
+	     			console.log(element);
+	         		
+	           	  //Se asigna el indice al id del elemento
+	           	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
+	           		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
+	       			
+	        	 		+"<div class=\"card-body\">"
+	        	 			+"<h5 class=\"card-title\">Precio: "+element.idLibro+"</h5>"
+	        	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
+	           			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
+	           			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
+	           			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
+	           			+"<p class=\"card-text\">Editorial: "+element.cantidad+"</p>"
+	           		+"</div>"
+	           		
+	                  +"<ul class=\"list-group list-group-flush\">"
+	                    +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
+	                    +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
+	                  +"</ul>"
+	                  
+	           	   +"</div>")); 
+	     		}
+      		} 
+ 		}
+	});
+    
+    </script>
 	
       <div class="sticky-top site-header">
           <div class="collapse" id="navbarToggleExternalContent">
@@ -84,7 +284,7 @@
               <p>Contenido de la Página</p>
               <ul class="menu-header">
                 <li><img src="img/iconos/pokemon16.png" alt=""> <a href="index.html">Inicio</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="adopcion.html">Adopción</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="catalogo.html">Catalogo</a></li>
                 <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento.html">Reclutamiento</a></li>
                 <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro.html">Regístrate</a></li>
               </ul>
@@ -94,7 +294,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <h2 class="titulo-principal">AdoptPokemon</h2>
+            <h2 class="titulo-principal">Changarro!</h2>
             <img src="img/iconos/pokemon32.png" alt="">
             
           </nav>
@@ -103,129 +303,68 @@
         <main class="container seccion contenido-centrado">
             <h2 class="centrar-texto">Ventana del administrador</h2>
 
-            <h3 class="centrar-texto">Pokemones</h3>
+            <h3 class="centrar-texto">Libros</h3>
 
+                    <label for="idLibro">ID del Libro:</label>
+                    <input type="number" id="idLibro"  onkeyup="guarda('IL')">
+                    
+                    <label for="Cantidad">Cantidad:</label>
+                    <input type="number" id="Cantidad" onkeyup="guarda('C')">
 
-            <form class="formularioAdministrador" action="">
-                <fieldset>
-                    <legend class="centrar-texto aviso">Formulario para registrar nuevos pokemones o actualizar datos de un nuevos pokemon así como buscarlos por ID</legend>
+                    <label for="Autor">Autor:</label>
+                    <input type="text" id="Autor" onkeyup="guarda('A')">
+                    
+                    <label for="Titulo">Titulo:</label>
+                    <input type="text" id="Titulo" onkeyup="guarda('T')">
 
-                    <label for="idPokemon">ID del Pokemon:</label>
-                    <input type="text" id="idPokemon"  required>
+                    <label for="Editorial">Editorial:</label>
+                    <input type="text" id="Editorial" onkeyup="guarda('E')">
 
-                    <label for="estatusPokemon">Estatus del pokemon:</label>
-                    <select id="estatusPokemon">
-                        <option value="" disabled selected>--Seleccione el Estatus del Pokemon--</option>
-                        <option value="procesoAdopcion">En proceso de adopción</option>
-                        <option value="adoptado">Adoptado</option>
-                    </select>
+                    <label for="Precio">Precio:</label>
+                    <input type="number" id="Precio" onkeyup="guarda('P')">
 
-                    <label for="nombrePokemon">Nombre del Pokemon:</label>
-                    <input type="text" id="nombrePokemon">
+                    <label for="Edicion">Edición:</label>
+                    <input type="number" id="Edicion" onkeyup="guarda('ED')">
 
-                    <label for="sexoPokemon">Sexo del Pokemon:</label>
-                    <select id="sexoPokemon">
-                        <option value="" disabled selected>--Seleccione el sexo del Pokemon--</option>
-                        <option value="macho">Macho</option>
-                        <option value="hembra">Hembra</option>
-                        <option value="indefinido">Indefinido (aplica en Pokemon legendarios)</option>
-                    </select>
+                    <label for="numeroPaginas">Número de paginas:</label>
+                    <input type="number" id="numeroPaginas" onkeyup="guarda('N')">
+                    
+                    <label for="Imagen">Imagen:</label>
+                    <input type="text" id="Imagen" onkeyup="guarda('I')">
 
-                    <label for="objetoPokemon">Objeto del Pokemon:</label>
-                    <input type="text" id="objetoPokemon">
+                    <label for="Sinopsis">Sinopsis:</label>
+                    <input type="text" id="Sinopsis" min="1" max="890" step="1" onkeyup="guarda('S')">
 
-                    <label for="naturalezaPokemon">Naturaleza del Pokemon:</label>
-                    <input type="text" id="naturalezaPokemon">
+                
 
-                    <label for="descripcionPokemon">Descripción del Pokemon:</label>
-                    <input type="text" id="descripcionPokemon">
-
-                    <label for="numeroPokedex">Número en la Pokédex:</label>
-                    <input type="number" id="numeroPokemon" min="1" max="890" step="1">
-
-                    <label for="primerTipo">Primer tipo del Pokemon:</label>
-                    <input type="text" id="primerTipo">
-
-                    <label for="segundoTipo">Segundo tipo del Pokemon:</label>
-                    <input type="text" id="segundoTipo">
-
-
-                    <label for="regionPokemon">Región del pokemon</label>
-                    <select id="regionPokemon">
-                        <option value="" disabled selected>--Seleccione su región--</option>
-                        <option value="kanto">Kanto</option>
-                        <option value="johto">Johto</option>
-                        <option value="hoenn">Hoenn</option>
-                        <option value="sinnoh">Sinnoh</option>
-                        <option value="teselia">Teselia</option>
-                        <option value="kalos">Kalos</option>
-                        <option value="alola">Alola</option>
-                        <option value="galar">Galar</option>
-                    </select>
-
-
-                </fieldset>
-
-                <input id="registrarPokemon" type="submit" value="Registrar" class="boton boton-rojo">
-                <input id="actualizarPokemon" type="submit" value="Actualizar" class="boton boton-rojo">
-                <input id="buscarAdmin" type="submit" value="Buscar" class="boton boton-rojo">
-            </form>
-
-            <h3 class="centrar-texto pt-5">Entrenadores</h3>
-
-            <form class="formularioAdministradorEntrenador" action="">
-                <fieldset>
-                    <legend class="centrar-texto aviso">Formulario para actualizar o buscar datos de entrenadores pokemon</legend>
-
-                    <label for="idEntrenador">ID del entrenador Pokemon:</label>
-                    <input type="text" id="idEntrenador"  required>
-
-                    <label for="nombreEntrenador">Nombre del entrenador:</label>
-                    <input type="text" id="nombreEntrenador">
-
-                    <label for="emailEntrenador">E-mail del entrenador:</label>
-                    <input type="email" id="emailEntrenador">
-
-                    <label for="direccionEntrenador">Dirección del entrenador:</label>
-                    <input type="text" id="direccionEntrenador">
-
-                    <label for="passwordEntrenador">Contraseña del entrenador:</label>
-                    <input type="text" id="passwordEntrenador">
-
-                    <label for="estatusTrabajador">Estatus del entrenador (trabajo):</label>
-                    <select id="estatusTrabajador">
-                        <option value="" disabled selected>--Seleccione el Estatus del entrenador--</option>
-                        <option value="reclutadoEnfermero">Enfermero/a</option>
-                        <option value="reclutadoRescatista">Rescatista</option>
-                        <option value="noReclutado">No reclutado</option>
-                    </select>
-
-                </fieldset>
-
-                <input id="actualizarEntrenador" type="submit" value="Actualizar" class="boton boton-rojo">
-                <input id="buscarAdminEntrenador" type="submit" value="Buscar" class="boton boton-rojo">
-            </form>
-
-        </main>
-
-
+                <button id="1" class="boton boton-rojo">Registrar</button>
+                <button id="2" class="boton boton-rojo">Actualizar</button>
+                <button id="3" class="boton boton-rojo">Buscar</button>
+                <button id="5" class="boton boton-verde">Todos</button>
+                <button id="4" class="boton boton-azul">Borrar</button>
         
+        <div class="container contenedor-principal my-5" id="contenido">
+			<h2 class="centrar-texto">Vista Predeterminada</h2>
+				<!-- LISTA Libros -->
+            
+        </div>
+        
+        </main>
 
         <footer class="site-footer  seccion">
           <div class="container contenedor-footer">
               <nav class="navegacion-footer">
                   <a href="index.html">Inicio</a>
-                  <a href="adopcion.html">Adopción</a>
+                  <a href="catalogo.html">Catalogo</a>
                   <a href="reclutamiento.html">Reclutamiento</a>
-               
                   <a href="registro.html">Regístrate</a>
               </nav>
 
-              <p class="copyright">Todos los Derechos Reservados EquipoRocket 2020 &copy;</p>
+              <p class="copyright">Todos los Derechos Reservados Erick y Susan 2020 &copy;</p>
           </div>
         </footer>
         
-        <!-- Popper.js, then Bootstrap JS -->
+        <!-- Popper.js,  Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
  
