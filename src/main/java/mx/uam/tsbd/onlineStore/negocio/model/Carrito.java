@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +28,6 @@ public class Carrito {
 	@GeneratedValue
  	private Integer IdCarrito;
  
- 	@NotNull
  	private Double Total;
  
 	@Builder.Default

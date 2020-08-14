@@ -33,8 +33,9 @@ public class CarritoService {
 	 * @return El carrito recien creado, null de lo contrario
 	 */
 	public Carrito create(Carrito nuevoCarrito) {
-		log.info("Creando carrito con id "+nuevoCarrito.getIdCarrito());
-		return carritoRepository.save(nuevoCarrito);
+		Carrito carrito = carritoRepository.save(nuevoCarrito);
+		log.info("Creando carrito con id "+carrito.getIdCarrito());
+		return carrito;
 
 	}
 	

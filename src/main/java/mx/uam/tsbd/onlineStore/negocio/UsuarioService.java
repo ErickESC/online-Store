@@ -30,11 +30,15 @@ public class UsuarioService {
 	 * @return El Usuario recien creado, null de lo contrario
 	 */
 	public Usuario create(Usuario nuevoUsuario) {
-		log.info("Creando Usuario con id "+nuevoUsuario.getIdUsuario());
+		
 		//Crea su carrito de compras
 		Carrito carrito = new Carrito();
 		nuevoUsuario.setCarrito(carrito);
-		return usuarioRepository.save(nuevoUsuario);
+		
+		Usuario usuario = usuarioRepository.save(nuevoUsuario);
+		log.info("Creando Usuario con id "+usuario.getIdUsuario());
+		
+		return usuario;
 
 	}
 	

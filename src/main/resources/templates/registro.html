@@ -46,7 +46,7 @@
 		  	apellidoM = document.getElementById("ApellidoM").value;
 	  }
 	  if (type == "P") {
-		  	apellidoP = document.getElementById("ApellidoPaterno").value;
+		  	apellidoP = document.getElementById("ApellidoP").value;
 	  }
 	  if (type == "E") {
 		  	contrasenia = document.getElementById("Contrasenia").value;
@@ -63,10 +63,11 @@
 	  if (type == "T") {
 	    	telefono = document.getElementById("Telefono").value;
 	  }
-	}
+ 	}
+    
 
  	//Variable con la URL principal
- 	var URL = "http://localhost:8080/libros";
+ 	var URL = "http://localhost:8080/usuarios";
  	
  	
 	$(document).ready(function(){
@@ -88,7 +89,8 @@
 						creaUsuario();
 						break;
 		  }
-  	});
+  		});
+	});
 		
     function creaUsuario(){
 				
@@ -120,8 +122,7 @@
     function anuncia(){
     	alert("Registro realizado con exito");
     }
-		
-	}
+ 	
     </script>
     
     
@@ -132,8 +133,8 @@
               <ul class="menu-header">
                  <!--  <li><img src="img/iconos/pokemon16.png" alt=""> <a href="/">Inicio</a></li>-->
                 <li><img src="img/iconos/pokemon16.png" alt=""> <a href="catalogo">Catalogo</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento">Administrar</a></li>                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro">Regístrate</a></li>
-
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento">Administrar</a></li>                
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro">Regístrate</a></li>
               </ul>
             </div>
           </div>
@@ -141,7 +142,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <h2 class="titulo-principal">Cagarro!</h2>
+            <h2 class="titulo-principal">Chagarro!</h2>
             <img src="img/iconos/pokemon32.png" alt="">
             
           </nav>
@@ -180,13 +181,13 @@
                     <legend class="centrar-texto">Correo electrónico</legend>
 
                     <label for="Correo">E-mail:</label>
-                    <input type="email" id="Correo" placeholder="Tu Correo Electrónico" onkeyup="guarda('E')" required>
+                    <input type="email" id="Correo" placeholder="Tu Correo Electrónico" onkeyup="guarda('C')" required>
 
                     <label for="emailConfirmado">Confirme E-mail:</label>
                     <input type="email" id="emailConfirmado" placeholder="Confimar Correo Electrónico" required>
 
                     <label for="Contrasenia">Contraseña:</label>
-                    <input type="password" id="Contrasenia" placeholder="" onkeyup="guarda('C')" required>
+                    <input type="password" id="Contrasenia" placeholder="" onkeyup="guarda('E')" required>
 
                     <label for="passwordC">Confirme Contraseña:</label>
                     <input type="password" id="passwordC" placeholder="" required>
@@ -197,7 +198,7 @@
                 <p class="mt-3 aviso">Al dar clic en el botón enviar aceptas los términos y condiciones de Changarro!</p>
                 <p class="mt-3 aviso">Se te enviara un ID con el que podras comprar</p>
 
-                <button id="1" type="submit" class="boton boton-rojo">Enviar</button>
+                <button id="1" class="boton boton-rojo">Enviar</button>
 
             </form>
         </main>
@@ -214,7 +215,6 @@
               <p class="copyright">Todos los Derechos Reservados Erick y Susan 2020 &copy;</p>
           </div>
         </footer>
-   
 
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
