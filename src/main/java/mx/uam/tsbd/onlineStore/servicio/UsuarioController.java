@@ -156,54 +156,6 @@ public class UsuarioController {
 	}
 	
 	/**
-	 * POST /usuarios/add/id del Usuario/tarjetas/id de la tarjeta
-	 * 
-	 * @param nuevoUsuario
-	 * @return OK si se agrego con exito o No content en caso contrario
-	 */
-	@ApiOperation(
-			value = "Agregar una tarjeta a un usuario",
-			notes = "Permite Agregar una tarjeta a un usuario"
-			)
-	@PostMapping(path = "/usuarios/add/{usuarioId}/tarjetas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <?> addTarjetaToUsuario(@PathVariable("usuarioId") Integer idUsuario, @PathVariable("id") Integer tarjetaID) {
-		
-		log.info("Recibí llamada a addTarjeta con Usuario"+ idUsuario +" y tarjeta: "+tarjetaID);
-		
-		boolean result = usuarioService.addTarjetaToUsuario(idUsuario, tarjetaID);
-		
-		if(result) {
-			return ResponseEntity.status(HttpStatus.OK).build();
-		}else {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		}
-	}
-	
-	/**
-	 * POST /usuarios/quit/id del Usuario/tarjetas/id de la tarjeta
-	 * 
-	 * @param nuevoUsuario
-	 * @return OK si se elimino con exito o No content en caso contrario
-	 */
-	@ApiOperation(
-			value = "Eliminar una tarjeta a un usuario",
-			notes = "Permite eliminar una tarjeta a un usuario"
-			)
-	@PostMapping(path = "/carritos/quit/{usuarioId}/libros/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <?> quitTarjetaFromUsuario(@PathVariable("usuarioId") Integer idUsuario, @PathVariable("id") Integer tarjetaID) {
-		
-		log.info("Recibí llamada a quitTarjeta con Usuario"+ idUsuario +" y tarjeta: "+tarjetaID);
-		
-		boolean result = usuarioService.quitTarjetaFromUsuario(idUsuario, tarjetaID);
-		
-		if(result) {
-			return ResponseEntity.status(HttpStatus.OK).build();
-		}else {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		}
-	}
-	
-	/**
 	 * POST /usuarios/add/id del Usuario/ventas/id de la venta
 	 * 
 	 * @param nuevoUsuario
@@ -248,6 +200,28 @@ public class UsuarioController {
 			return ResponseEntity.status(HttpStatus.OK).build();
 		}else {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return status ok y Usuario solicitado, not found en caso contrario
+	 */
+	@ApiOperation(
+			value = "Regresa OK si usuario y contranseña coinciden",
+			notes = "Regresa OK si xoincide, Not found en caso contrario"
+			)
+	@GetMapping(path = "/usuarios/{id}/{psswrd}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <?> retrieveSingIn(@PathVariable("id") @Valid Integer id, @PathVariable("psswrd") @Valid String psswrd) {
+		log.info("Buscando al Usuario con clave "+id+" y contraseña: "+psswrd);
+		
+		Boolean respuesta = usuarioService.retriveSingIn(id, psswrd);
+		
+		if(respuesta) {
+			return ResponseEntity.status(HttpStatus.OK).body("Exito");
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro Usuario o no coinciden");
 		}
 	}
 }

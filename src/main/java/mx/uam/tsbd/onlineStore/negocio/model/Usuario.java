@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -26,8 +27,11 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class Usuario {
 	
-	@Id 
+	@Id
+	@GeneratedValue
 	private Integer IdUsuario;
+	
+	private String contraseña;
 	
 	@NotBlank
 	private String TipoUsuario;
@@ -49,19 +53,6 @@ public class Usuario {
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "Carrito")
 	private Carrito carrito;
-	
-	@Builder.Default
-	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-	@JoinColumn(name = "Info_Tarjeta")
-	private List <Tarjeta> tarjetas = new ArrayList <> ();
-	
-	public boolean addTarjeta(Tarjeta tarjeta) {
-		return tarjetas.add(tarjeta);
-	}
-	
-	public boolean quitTarjeta(Tarjeta tarjeta) {
-		return tarjetas.remove(tarjeta);
-	}
 
 	@Builder.Default
 	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})

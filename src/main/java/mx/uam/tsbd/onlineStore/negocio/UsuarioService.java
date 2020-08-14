@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import mx.uam.tsbd.onlineStore.datos.UsuarioRepository;
 import mx.uam.tsbd.onlineStore.negocio.model.Carrito;
-import mx.uam.tsbd.onlineStore.negocio.model.Tarjeta;
 import mx.uam.tsbd.onlineStore.negocio.model.Usuario;
 import mx.uam.tsbd.onlineStore.negocio.model.Venta;
 
@@ -19,9 +18,6 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	@Autowired
-	private TarjetaService tarjetaService;
 	
 	@Autowired
 	private VentaService ventaService;
@@ -120,62 +116,6 @@ public class UsuarioService {
 	/**
 	 * 
 	 * @param UsuarioId
-	 * @param tarjetaId
-	 * @return
-	 */
-	public boolean addTarjetaToUsuario(Integer usuarioId, Integer tarjetaId) {
-		
-		Tarjeta tarjeta = tarjetaService.retrive(tarjetaId);
-		
-		Optional <Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
-		
-		if(!usuarioOpt.isPresent() || tarjeta == null) {
-			
-			return false;
-		}
-
-		Usuario usuario = usuarioOpt.get();
-		usuario.addTarjeta(tarjeta);
-		
-		
-		
-		// Persistir el cambio
-		usuarioRepository.save(usuario);
-		
-		return true;
-	}
-	
-	/**
-	 * 
-	 * @param usuarioId
-	 * @param tarjetaId
-	 * @return
-	 */
-	public boolean quitTarjetaFromUsuario(Integer usuarioId, Integer tarjetaId) {
-		
-		Tarjeta tarjeta = tarjetaService.retrive(tarjetaId);
-		
-		Optional <Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
-		
-		if(!usuarioOpt.isPresent() || tarjeta == null) {
-			
-			return false;
-		}
-
-		Usuario usuario = usuarioOpt.get();
-		usuario.quitTarjeta(tarjeta);
-		
-		
-		
-		// Persistir el cambio
-		usuarioRepository.save(usuario);
-		
-		return true;
-	}
-	
-	/**
-	 * 
-	 * @param UsuarioId
 	 * @param ventaId
 	 * @return
 	 */
@@ -225,5 +165,22 @@ public class UsuarioService {
 		usuarioRepository.save(usuario);
 		
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @param Id
+	 * @return Usuario al que le pertenece el id
+	 */
+	public boolean retriveSingIn(Integer Id, String pswd){
+		log.info("Llamado a regresar al Usuario con id "+Id);
+		
+		Optional <Usuario> usuarioOpt = usuarioRepository.findById(Id);
+		
+		if(usuarioOpt.isPresent() && (usuarioOpt.get().getContraseña()==pswd)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 }
