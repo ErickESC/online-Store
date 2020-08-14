@@ -31,7 +31,7 @@ public class Usuario {
 	@GeneratedValue
 	private Integer IdUsuario;
 	
-	private String contraseña;
+	private String contrasenia;
 	
 	@NotBlank
 	private String TipoUsuario;
@@ -49,6 +49,9 @@ public class Usuario {
 	private String Correo;
 	
 	private String Telefono;
+	
+	@NotBlank
+	private String Direccion;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "Carrito")

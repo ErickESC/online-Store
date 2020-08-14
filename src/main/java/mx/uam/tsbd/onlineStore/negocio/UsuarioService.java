@@ -177,7 +177,7 @@ public class UsuarioService {
 		
 		Optional <Usuario> usuarioOpt = usuarioRepository.findById(Id);
 		
-		if(usuarioOpt.isPresent() && (usuarioOpt.get().getContraseña()==pswd)) {
+		if(usuarioOpt.isPresent() && (usuarioOpt.get().getContrasenia()==pswd)) {
 			return true;
 		}else {
 			return false;
