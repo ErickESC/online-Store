@@ -11,7 +11,7 @@
         <!--Hojas de estilo personalizadas-->
         <link rel="stylesheet" type="text/css" href="static/css/normalize.css" th:href="@{/css/normalize.css}" >
         <link rel="stylesheet" type="text/css" href="static/css/style.css" th:href="@{/css/style.css}">
-
+        
         <!--Fuentes-->
         <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Lato:wght@400;700&display=swap" rel="stylesheet"> 
 
@@ -29,56 +29,89 @@
     	</script>
 			
     	<script>
+    	
+    	var contador=0;
+    	
+    	var listaDeLibros;
+    	
     	$(document).ready(function(){
        		
     		$.ajaxSetup({contentType: "application/json; charset=utf-8"});
-
-       		var lista;
-       		
-       		var URL = "http://localhost:8080/libros";
-       		
+	       	
        		console.log("Ready");
+       		
+       		datosDeCargaLibros();
+    	});
+    	
+    	function datosDeCargaLibros(){
+       		var URL = "http://localhost:8080/libros";
 	       	
        		$.get(URL,cargaLibros);
+    	}
+    	
+    	function Carrito(){
+    		
+    	}
+    	
+       	function cargaLibros(Libros){
        		
-	       	function cargaLibros(Libros){
-	          			
-		          		// Recorre los objetos
-		          		var i;
-		                
-		          		var lista = Libros;
-		          		
-		          		for (i=0;i<lista.length;i++) {
-		    	     		var element = lista[i];
-		    	     		
-		             		console.log(element);
-		             		
-		             		//Se asigna el indice al id del elemento
-		          	 		
-		             	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
-		             		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
-		         			
-		          	 		+"<div class=\"card-body\">"
-		          	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
-		             			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
-		             			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
-		             			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
-		             		+"</div>"
-		             		
-			                +"<ul class=\"list-group list-group-flush\">"
-			                  +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
-			                  +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
-			                +"</ul>"
-		             		
-			                +"<div class=\"card-body\">"
-			                  +"<a href=\"#\" class=\"card-link\">Comprar</a>"<!--AGREGAR REFERENCIA A VENTA-->
-			                  +"<a href=\"#\" class=\"card-link\">Agregar al carrito</a>"<!--AGREGAR REFERENCIA A CARRITO-->
-			                +"</div>" 
-			                
-		             	   +"</div>")); 
-		          		} 
-		     }
-    	});
+      		// Recorre los objetos
+      		var i;
+            
+      		var lista = Libros;
+      		
+      		for (i=0;i<lista.length;i++) {
+	     		var element = lista[i];
+	     		
+         		console.log(element);
+         		
+         		//Se asigna el indice al id del elemento
+      	 		
+         	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
+         		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
+     			
+      	 		+"<div class=\"card-body\">"
+      	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
+         			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
+         			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
+         			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
+         		+"</div>"
+         		
+                +"<ul class=\"list-group list-group-flush\">"
+                  +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
+                  +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
+                +"</ul>"
+         		
+                +"<div class=\"card-body\">"
+                  +"<a href=\"#\" id=\""+element.idLibro+"\" class=\"boton boton-rojo\" name=\"1\">Agregar al carrito</a>"<!--AGREGAR REFERENCIA A CARRITO-->
+                  +"<a href=\"#\" id=\""+element.idLibro+"\" class=\"boton boton-verde\" name=\"2\">Comprar</a>"<!--AGREGAR REFERENCIA A VENTA-->
+                +"</div>"
+                
+         	   +"</div>"));
+      		} 
+      		
+	   		//Al hacer click en algun boton se detonara esta funcion
+			$("a").click(function(){
+			  //Obtenemos el id de la Funcion
+	          var Button= $(this).attr("name");
+	          var IdLibro= $(this).attr("id");
+	 		  
+			  //Se actuara de acuerdo al id del boton
+			  switch (Button) {
+						case '1':
+							console.log("Agregar al carrito");
+							contador = contador+1;
+							console.log(contador);
+				       		$('#contador').empty();
+				       		$("#contador").append($("<i>"+contador+"</i>"));
+							break;
+						case '2':
+							console.log("Se invoco actualizaLibro()");
+							actualizaLibro();
+							break;
+			  }
+    		});
+ 		}
     	</script>
     	
 
@@ -98,17 +131,18 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="dropdown">
-  				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-   					 <img src="img/iconos/pokemon32.png" alt="">
-  				</button>
-  				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    				<a class="dropdown-item" href="#">Action</a>
-    				<a class="dropdown-item" href="#">Another action</a>
-    				<a class="dropdown-item" href="#">Something else here</a>
-  				</div>
-			</div>
-			<h2 class="titulo-principal">Changarro!</h2>      
+           	<div class="nav-item">
+        		<a class="nav-link" href="#" style="color: gray">
+        			<img src="img/iconos/carrito.png" alt="" width="24px" height="24px" align="left">
+        				(<i id="contador" style="color: orange"></i>)
+        			Carrito
+        		</a>
+      		</div>
+			<h2 class="titulo-principal">Changarro!</h2>  
+				<form class="form-inline my-2 my-lg-0">
+      				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+   				</form>
           </nav>
         </div>
 

@@ -91,11 +91,12 @@ public class LibroController {
 			)
 	    @GetMapping(path = "/libros", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity <?> retrieveAll() {
-			
+		
+			libroService.rellena();
+		
 			Iterable <Libro> libros = libroService.RetrieveAll();
 			
 			return ResponseEntity.status(HttpStatus.OK).body(libros); 
-			
 		}
 		
 	@ApiOperation(
