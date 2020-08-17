@@ -103,6 +103,7 @@ img{
     flex: 0 0 100%;
     border-radius: 1rem;
 }
+
 @media (min-width: 768px) {
     .boton{
         display:  inline-block;
@@ -123,6 +124,10 @@ img{
 }
 .boton-verde{
     background-color:  green;
+}
+
+.boton-gris{
+    background-color:  gray;
 }
 
 /*Header*/

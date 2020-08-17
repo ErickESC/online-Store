@@ -30,9 +30,16 @@
 			
     	<script>
     	
+    	var iva=0.16;
+    	<!--  Contador de objetos en el carrito -->
     	var contador=0;
+    	<!--  SubTotal y Total de la compra -->
+    	var subtotal=0;
+    	var total=0;
     	
-    	var listaDeLibros;
+    	<!--  Listas Auxiliares -->
+    	var listaDeLibros;<!-- Para Busquedas -->
+    	var listaDeCarrito = [];<!--  Para el carrito de compras -->
     	
     	$(document).ready(function(){
        		
@@ -41,6 +48,20 @@
        		console.log("Ready");
        		
        		datosDeCargaLibros();
+       		
+    		$("button").click(function(){
+    			  //Obtenemos el id de la Funcion
+    	          var ID= $(this).attr("id");
+    	 		  
+    			  //Se actuara de acuerdo al id del boton
+    			  switch (ID) {
+    						case '4':
+    							console.log("Ver Carrito");
+    							verCarrito();
+    							break;
+    			  }
+    	  		});
+       		
     	});
     	
     	function datosDeCargaLibros(){
@@ -49,16 +70,96 @@
        		$.get(URL,cargaLibros);
     	}
     	
-    	function Carrito(){
+    	function botonesAccion(){
+	   		//Al hacer click en algun boton se detonara esta funcion
+			$("a").click(function(){
+			  //Obtenemos el id de la Funcion
+	          var Button= $(this).attr("name");
+	          var IdLibro= $(this).attr("id");
+	 		  
+			  //Se actuara de acuerdo al id del boton
+			  switch (Button) {
+						case '1':
+							console.log("Agregar al carrito");
+							contador++;
+							$("#contador").empty();
+							$("#contador").append($("<i>"+contador+"</i>"));
+							agregarCarrito(IdLibro);
+							break;
+						case '2':
+							console.log("Comprar un libro");
+							agregarCarrito(IdLibro);
+							verCarrito();
+							break;
+						case '3':
+							console.log("Eliminar del carrito");
+							contador--;
+							$("#contador").empty();
+							$("#contador").append($("<i>"+contador+"</i>"));
+							eliminarCarrito(IdLibro);
+							break;
+						case '5':
+							console.log("Ir a Catalogo");
+							datosDeCargaLibros();
+							break;
+						case '6':
+							console.log("Realizar Compra");
+							RealizarCompra();
+							break;
+			  }
+    		});
+    	}
+    	
+    	function RealizarCompra(){
     		
     	}
     	
+    	function agregarCarrito(idLibro){
+    		
+    		var i;
+    		
+    		for (i=0;i<listaDeLibros.length;i++) {
+    			var element = listaDeLibros[i];
+    			
+    			if(element.idLibro == idLibro){
+    				listaDeCarrito.push(element);
+    				subtotal += element.precio;
+    				total = total + (element.precio + (element.total*iva));
+    			}
+    		}
+    	}
+    	
+    	function eliminarCarrito(IdLibro){
+    		
+    		var i;
+    		
+    		for (i=0;i<listaDeLibros.length;i++) {
+    			var element = listaDeLibros[i];
+    			
+    			if(element.idLibro == IdLibro){
+    				subtotal -= element.precio;
+    				total = total-(element.precio + (element.total*iva));
+    				listaDeCarrito.splice(i,1);
+    			}
+    		}
+    		
+    		verCarrito();
+    	}
+    	
+    	function verCarrito(){
+    		cargaCarrito(listaDeCarrito);
+    	}
+    	
        	function cargaLibros(Libros){
+       		
+       		$("#contenido").empty();
        		
       		// Recorre los objetos
       		var i;
             
       		var lista = Libros;
+      		<!-- Lo guardamos en la lista auxiliar -->
+      		listaDeLibros = Libros;
       		
       		for (i=0;i<lista.length;i++) {
 	     		var element = lista[i];
@@ -88,30 +189,70 @@
                 +"</div>"
                 
          	   +"</div>"));
-      		} 
-      		
-	   		//Al hacer click en algun boton se detonara esta funcion
-			$("a").click(function(){
-			  //Obtenemos el id de la Funcion
-	          var Button= $(this).attr("name");
-	          var IdLibro= $(this).attr("id");
-	 		  
-			  //Se actuara de acuerdo al id del boton
-			  switch (Button) {
-						case '1':
-							console.log("Agregar al carrito");
-							contador = contador+1;
-							console.log(contador);
-				       		$('#contador').empty();
-				       		$("#contador").append($("<i>"+contador+"</i>"));
-							break;
-						case '2':
-							console.log("Se invoco actualizaLibro()");
-							actualizaLibro();
-							break;
-			  }
-    		});
+      		}
+       		botonesAccion();
  		}
+       	
+      	function cargaCarrito(Libros){
+       		
+       		$("#contenido").empty();
+       		
+      		// Recorre los objetos
+      		var i;
+            
+      		var lista = Libros;
+       	    $("#contenido").append($("<a class=\"boton boton-azul\" name=\"5\" align=\"center\">volver a catalogo</a>"));
+      		$("#contenido").append($("<div class=\"container mt-4\">"
+      								+"<h3>Carrito</h3><br>"
+      									+"<div class=\"row\">"
+      										+"<div class=\"col-sm-8\">"
+      											+"<table class=\"table table-hover\">"
+      												+"<thead>"
+      													+"<tr>"
+      														+"<th>ITEM</th>"
+      														+"<th>TITULO</th>"
+      														+"<th>PRECIO</th>"
+      														+"<th>CANTIDAD</th>"
+      														+"<th>ACCION</th>"
+      													+"</tr>"
+      												+"</thead>"
+      												+"<tbody id=\"elementos\">"));
+      									      		for (i=0;i<lista.length;i++) {
+      										     		var element = lista[i];
+      									         		console.log(element);
+      									      		
+      								$("#elementos").append($("<tr>"
+  															+"<td><img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\" width=\"100px\" height=\"200px\"></td>"
+  															+"<td align=\"center\">"+element.titulo+"</td>"
+  															+"<td align=\"center\">"+element.precio+"</td>"
+  															+"<td align=\"center\">1</td>"
+  															+"<td align=\"center\"><a class=\"boton boton-verde\" name=\"3\">eliminar</a></td>"
+  														+"</tr>"));
+      									      		}
+      					$("#contenido").append($("</tbody>"
+      											+"</table>"
+      										+"</div>"
+      										+"<div class=\"col-sm-4\">"
+      											+"<div class=\"card\">"
+      												+"<div class=\"card-header\">"
+      													+"<h3>Generar Compra</h3>"
+      												+"</div>"
+      												+"<div class=\"card-body\">"
+      													+"<label>Subtotal:</label>"
+      													+"<p id=\"subtotal\">"+subtotal+"</p>"
+      													+"<label>Total:</label>"
+      													+"<p id=\"total\">"+total+"</p>"
+      												+"</div>"
+      												+"<div class=\"card-footer\">"
+      							                  		+"<a href=\"#\" class=\"boton boton-rojo\" name=\"6\">Realizar Pago</a>"<!--AGREGAR REFERENCIA A CARRITO-->
+      												+"</div>"
+      											+"</div>"
+      										+"</div>"
+      									+"</div>"
+      								+"</div>"));
+       		botonesAccion();
+ 		}
+       	
     	</script>
     	
 
@@ -132,11 +273,10 @@
               <span class="navbar-toggler-icon"></span>
             </button>
            	<div class="nav-item">
-        		<a class="nav-link" href="#" style="color: gray">
+        		<button class="boton boton-gris" style="color: gray" id="4">
         			<img src="img/iconos/carrito.png" alt="" width="24px" height="24px" align="left">
-        				(<i id="contador" style="color: orange"></i>)
-        			Carrito
-        		</a>
+        				<i id="contador" style="color: orange"></i>
+        		</button>
       		</div>
 			<h2 class="titulo-principal">Changarro!</h2>  
 				<form class="form-inline my-2 my-lg-0">
@@ -148,7 +288,7 @@
 
         <div class="container contenedor-principal my-5" id="contenido">
 
-				<!-- LISTA POKEMONES -->
+				<!-- LISTA LIBROS -->
             
         </div>
 
