@@ -206,7 +206,9 @@
  		}
        	
        	function recuperaTodos(){
-				  
+			
+       		$("#contenido").empty();
+       		
 					$.ajax({url: URL, 
 	     		    		method: 'GET',
 	     		    		success: cargaLibros,
@@ -218,6 +220,7 @@
 
        	function cargaLibros(Libros){
   			
+       		$("#contenido").empty();
       		// Recorre los objetos
       		var i;
             
@@ -230,7 +233,7 @@
          		
          		//Se asigna el indice al id del elemento
       	 		
-         	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
+         	  $("#contenido").append($("<div class=\"card estilo-carta\">"));
          		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
      			
       	 		+"<div class=\"card-body\">"
@@ -252,7 +255,7 @@
  		}
        	
        	function cargaUnLibro(Libros){
-  			
+       		$("#contenido").empty();
       		// Recorre los objetos
       		var i;
             
@@ -295,10 +298,10 @@
             <div class="bg-dark pt-4 px-4 pb-1">
               <p>Contenido de la Página</p>
               <ul class="menu-header">
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="index.html">Inicio</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="catalogo.html">Catalogo</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento.html">Reclutamiento</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro.html">Regístrate</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="index">Inicio</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="catalogo">Catalogo</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento">Reclutamiento</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro">Regístrate</a></li>
               </ul>
             </div>
           </div>
@@ -342,7 +345,7 @@
                     <input type="number" id="numeroPaginas" onkeyup="guarda('N')">
                     
                     <label for="Imagen">Imagen:</label>
-                    <input type="text" id="Imagen" onkeyup="guarda('I')">
+                    <input type="text" value="Link de la imagen" id="Imagen" onkeyup="guarda('I')">
 
                     <label for="Sinopsis">Sinopsis:</label>
                     <input type="text" id="Sinopsis" min="1" max="890" step="1" onkeyup="guarda('S')">
@@ -354,6 +357,8 @@
                 <button id="3" class="boton boton-rojo">Buscar</button>
                 <button id="5" class="boton boton-verde">Todos</button>
                 <button id="4" class="boton boton-azul">Borrar</button>
+                <br><br>
+                <a class="boton boton-gris" href="administradorMain">Volver</a>
         
         <div class="container contenedor-principal my-5" id="contenido">
 			<h2 class="centrar-texto">Vista Predeterminada</h2>
@@ -366,10 +371,10 @@
         <footer class="site-footer  seccion">
           <div class="container contenedor-footer">
               <nav class="navegacion-footer">
-                  <a href="index.html">Inicio</a>
-                  <a href="catalogo.html">Catalogo</a>
-                  <a href="reclutamiento.html">Reclutamiento</a>
-                  <a href="registro.html">Regístrate</a>
+                  <a href="index">Inicio</a>
+                  <a href="catalogo">Catalogo</a>
+                  <a href="reclutamiento">Reclutamiento</a>
+                  <a href="registro">Regístrate</a>
               </nav>
 
               <p class="copyright">Todos los Derechos Reservados Erick y Susan 2020 &copy;</p>

@@ -26,268 +26,6 @@
 
     <script>
     
- 	//Variables globales para guardar los valores de los inputs
- 	var idlibro= "ID sin definir";
- 	var autor = "Autor sin definir";
- 	var titulo = "Titulo sin definir";
- 	var editorial= "Editorial sin definir";
- 	var precio = "Precio sin definir";
- 	var edicicion = "Edicion sin definir";
- 	var npaginas = "NoPaginas sin definir";
- 	var sinopsis = "Sinopsis sin definir";
- 	var cantidad = "Cantidad sin definir";
- 	var imagen = "Imagen sin definir";
- 	
- 	//Guardamos los valores de los inputs
- 	function guarda(type) {
-	  
-	  if (type == "IL") {
-		  	idlibro = document.getElementById("idLibro").value;
-	    	console.log(this.idlibro);
-	  }
-	  if (type == "A") {
-		  	autor = document.getElementById("Autor").value;
-		    console.log(this.autor);
-	  }
-	  if (type == "T") {
-		  	titulo = document.getElementById("Titulo").value;
-		    console.log(this.titulo);
-	  }
-	  if (type == "E") {
-		  	editorial = document.getElementById("Editorial").value;
-	    	console.log(this.editorial);
-	  }
-	  if (type == "P") {
-		    precio = document.getElementById("Precio").value;
-		    console.log(this.precio);
-	  }
-	  if (type == "ED") {
-		    edicion = document.getElementById("Edicion").value;
-		    console.log(this.edicion);
-	  }
-	  if (type == "S") {
-	    	sinopsis = document.getElementById("Sinopsis").value;
-	    	console.log(this.sinopsis);
-	  }
-	  if (type == "N") {
-		    npaginas = document.getElementById("numeroPaginas").value;
-		    console.log(this.npaginas);
-	  }
-	  if (type == "C") {
-		    cantidad = document.getElementById("Cantidad").value;
-		    console.log(this.cantidad);
-	  }
-	  if (type == "I") {
-		    imagen = document.getElementById("Imagen").value;
-		    console.log(this.imagen);
-	  }
-	}
-
- 	//Variable con la URL principal
- 	var URL = "http://localhost:8080/libros";
- 	
- 	
-	$(document).ready(function(){
-   		
-		$.ajaxSetup({contentType: "application/json; charset=utf-8"});
-		
-   		//Variable para poder usar la list fuera de la funcion
-   		var lista;
-   		
-   		//Al hacer click en algun boton se detonara esta funcion
-		$("button").click(function(){
-		  //Obtenemos el id de la Funcion
-          var ID= $(this).attr("id");
- 		  
-		  //Se actuara de acuerdo al id del boton
-		  switch (ID) {
-					case '1':
-						console.log("Se invoco creaLibro()");
-						creaLibro();
-						break;
-					case '2':
-						console.log("Se invoco actualizaLibro()");
-						actualizaLibro();
-						break;
-					case '3':
-						console.log("Se invoco cargaLibro()");
-						cargaLibro();
-						break;
-					case '4':
-						console.log("Se invoco borraLibro()");
-						borraLibro();
-						break;
-					case '5':
-						console.log("Se invoco Recupera todos()");
-						recuperaTodos();
-						break;
-		  }
-  		});
-		
-       	function creaLibro(){
-      		
-				$("#contenido").empty();
-				
-				var Libro = JSON.stringify({ autor: this.autor,
-					  						 cantidad: this.cantidad,
-					  						 descripcion: this.sinopsis,
-					  						 edicion: this.edicion,
-					 						 editorial: this.editorial,
-					 						 idLibro: this.idlibro,
-					 						 imagen: this.imagen,
-					 						 noPaginas: this.npaginas,
-					 						 precio: this.precio,
-					 						 titulo: this.titulo							
-											});
-
-				//Imprimimos en consola el json generado
-				console.log(Libro);
-				
-				$.ajax({url: URL, 
-		    		method: 'POST',
-		    		data: Libro,
-		    		success: cargaLibro,
-		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
-		    		     alert("Ocurrion algun error");
-		    		}
-		    	});
-				
-				
- 		}
-		
-       	function actualizaLibro(){
-      		
-				$("#contenido").empty();
-				
-				var url = URL+"/"+this.idlibro;
-				
-				var Libro = JSON.stringify({ idLibro: this.idlibro})
-				
-				//Imprimimos en consola el json generado
-				console.log(Libro);
-				
-				$.ajax({url: url, 
-		    		method: 'PUT',
-		    		data: Libro,
-		    		success: cargaLibro,
-		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
-		    		     alert("Ocurrion algun error");
-		    		}
-		    	});
-				
- 		}
-		
-       	function cargaLibro(){
-       		
-				$("#contenido").empty();
-				
-				$.ajax({url: URL, 
-		    		method: 'GET',
-		    		success: cargaUnLibro,
-		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
-		    		     alert("Ocurrion algun error");
-		    		}
-		    	});
-				
- 		}
-		
-       	function borraLibro(){
-      		
-				$("#contenido").empty();
-				
-				var url = URL+"/"+parseInt(this.idlibro);
-				
-				var libro = JSON.stringify({ idLibro: parseInt(this.idlibro) })
-				
-				$.ajax({url: url, 
-		    		method: 'DELETE',
-		    		data: libro
-		    	});
- 		}
-       	
-       	function recuperaTodos(){
-				  
-					$.ajax({url: URL, 
-	     		    		method: 'GET',
-	     		    		success: cargaLibros,
-	     		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
-	   		    		     alert("Ocurrion algun error");
-	   		    		    }
-	     		    });
-       	}
-
-       	function cargaLibros(Libros){
-  			
-      		// Recorre los objetos
-      		var i;
-            
-      		lista = Libros;
-      		
-      		for (i=0;i<lista.length;i++) {
-	     		var element = lista[i];
-	     		
-         		console.log(element);
-         		
-         		//Se asigna el indice al id del elemento
-      	 		
-         	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
-         		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
-     			
-      	 		+"<div class=\"card-body\">"
-      	 			+"<h5 class=\"card-title\">Precio: "+element.idLibro+"</h5>"
-      	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
-         			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
-         			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
-         			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
-         			+"<p class=\"card-text\">Editorial: "+element.cantidad+"</p>"
-         		+"</div>"
-         		
-                +"<ul class=\"list-group list-group-flush\">"
-                  +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
-                  +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
-                +"</ul>"
-                
-         	   +"</div>")); 
-      		} 
- 		}
-       	
-       	function cargaUnLibro(Libros){
-  			
-      		// Recorre los objetos
-      		var i;
-            
-      		lista = Libros;
-      		
-      		for (i=0;i<lista.length;i++) {
-	     		var element = lista[i];
-	     		
-	     		if(element.idLibro == this.idlibro){
-	     			console.log(element);
-	         		
-	           	  //Se asigna el indice al id del elemento
-	           	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
-	           		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
-	       			
-	        	 		+"<div class=\"card-body\">"
-	        	 			+"<h5 class=\"card-title\">Precio: "+element.idLibro+"</h5>"
-	        	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
-	           			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
-	           			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
-	           			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
-	           			+"<p class=\"card-text\">Editorial: "+element.cantidad+"</p>"
-	           		+"</div>"
-	           		
-	                  +"<ul class=\"list-group list-group-flush\">"
-	                    +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
-	                    +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
-	                  +"</ul>"
-	                  
-	           	   +"</div>")); 
-	     		}
-      		} 
- 		}
-	});
-    
     </script>
 	
       <div class="sticky-top site-header">
@@ -295,10 +33,10 @@
             <div class="bg-dark pt-4 px-4 pb-1">
               <p>Contenido de la Página</p>
               <ul class="menu-header">
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="index.html">Inicio</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="catalogo.html">Catalogo</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento.html">Reclutamiento</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro.html">Regístrate</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="index">Inicio</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="catalogo">Catalogo</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento">Reclutamiento</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro">Regístrate</a></li>
               </ul>
             </div>
           </div>
@@ -315,61 +53,22 @@
         <main class="container seccion contenido-centrado">
             <h2 class="centrar-texto">Ventana del administrador</h2>
 
-            <h3 class="centrar-texto">Libros</h3>
+            <h3 class="centrar-texto">Que desea hacer?</h3>
 
-                    <label for="idLibro">ID del Libro:</label>
-                    <input type="number" id="idLibro"  onkeyup="guarda('IL')">
-                    
-                    <label for="Cantidad">Cantidad:</label>
-                    <input type="number" id="Cantidad" onkeyup="guarda('C')">
-
-                    <label for="Autor">Autor:</label>
-                    <input type="text" id="Autor" onkeyup="guarda('A')">
-                    
-                    <label for="Titulo">Titulo:</label>
-                    <input type="text" id="Titulo" onkeyup="guarda('T')">
-
-                    <label for="Editorial">Editorial:</label>
-                    <input type="text" id="Editorial" onkeyup="guarda('E')">
-
-                    <label for="Precio">Precio:</label>
-                    <input type="number" id="Precio" onkeyup="guarda('P')">
-
-                    <label for="Edicion">Edición:</label>
-                    <input type="number" id="Edicion" onkeyup="guarda('ED')">
-
-                    <label for="numeroPaginas">Número de paginas:</label>
-                    <input type="number" id="numeroPaginas" onkeyup="guarda('N')">
-                    
-                    <label for="Imagen">Imagen:</label>
-                    <input type="text" id="Imagen" onkeyup="guarda('I')">
-
-                    <label for="Sinopsis">Sinopsis:</label>
-                    <input type="text" id="Sinopsis" min="1" max="890" step="1" onkeyup="guarda('S')">
-
-                
-
-                <button id="1" class="boton boton-rojo">Registrar</button>
-                <button id="2" class="boton boton-rojo">Actualizar</button>
-                <button id="3" class="boton boton-rojo">Buscar</button>
-                <button id="5" class="boton boton-verde">Todos</button>
-                <button id="4" class="boton boton-azul">Borrar</button>
-        
-        <div class="container contenedor-principal my-5" id="contenido">
-			<h2 class="centrar-texto">Vista Predeterminada</h2>
-				<!-- LISTA Libros -->
-            
-        </div>
+                <a class="boton boton-rojo" href="administrador">Administrar Libros</a>
+                <a class="boton boton-azul" href="reportes">Generar reportes</a>
+                <a class="boton boton-verde" href="registroAdministradores">Registrar administradores</a>
+                <a class="boton boton-gris" href="catalogo">Ver Catalogo</a>
         
         </main>
 
         <footer class="site-footer  seccion">
           <div class="container contenedor-footer">
               <nav class="navegacion-footer">
-                  <a href="index.html">Inicio</a>
-                  <a href="catalogo.html">Catalogo</a>
-                  <a href="reclutamiento.html">Reclutamiento</a>
-                  <a href="registro.html">Regístrate</a>
+                  <a href="index">Inicio</a>
+                  <a href="catalogo">Catalogo</a>
+                  <a href="reclutamiento">Reclutamiento</a>
+                  <a href="registro">Regístrate</a>
               </nav>
 
               <p class="copyright">Todos los Derechos Reservados Erick y Susan 2020 &copy;</p>

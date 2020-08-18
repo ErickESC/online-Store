@@ -26,12 +26,12 @@ public class Main_Controller {
 		return "catalogo";
 	}
 	
-	@GetMapping("/reclutamiento")
-	public String reclutamiento() {
+	@GetMapping("/registroAdministradores")
+	public String registroAdministradores() {
 		
-		log.info("se invoco el metodo reclutamiento()");
+		log.info("se invoco el metodo registroAdministradores()");
 		
-		return "reclutamiento";
+		return "registroAdministradores";
 	}
 	
 	@GetMapping("/registro")
@@ -42,6 +42,14 @@ public class Main_Controller {
 		return "registro";
 	}
 	
+	@GetMapping("/reportes")
+	public String reportes() {
+		
+		log.info("se invoco el metodo reportes()");
+		
+		return "reportes";
+	}
+	
 	@GetMapping("/administrador")
 	public String administrador() {
 		
@@ -50,11 +58,12 @@ public class Main_Controller {
 		return "administrador";
 	}
 	
-	@GetMapping("/enfermera")
-	public String enfermera() {
+	
+	@GetMapping("/administradorMain")
+	public String administradorMain() {
 		
-		log.info("se invoco el metodo enfermera()");
+		log.info("se invoco el metodo administradorMain()");
 		
-		return "enfermera";
+		return "administradorMain";
 	}
 }

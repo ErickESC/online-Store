@@ -27,16 +27,9 @@
     <script>
     
  	//Variables globales para guardar los valores de los inputs
- 	var idlibro= "ID sin definir";
+ 	var objeto= "ID sin definir";
  	var autor = "Autor sin definir";
  	var titulo = "Titulo sin definir";
- 	var editorial= "Editorial sin definir";
- 	var precio = "Precio sin definir";
- 	var edicicion = "Edicion sin definir";
- 	var npaginas = "NoPaginas sin definir";
- 	var sinopsis = "Sinopsis sin definir";
- 	var cantidad = "Cantidad sin definir";
- 	var imagen = "Imagen sin definir";
  	
  	//Guardamos los valores de los inputs
  	function guarda(type) {
@@ -52,34 +45,6 @@
 	  if (type == "T") {
 		  	titulo = document.getElementById("Titulo").value;
 		    console.log(this.titulo);
-	  }
-	  if (type == "E") {
-		  	editorial = document.getElementById("Editorial").value;
-	    	console.log(this.editorial);
-	  }
-	  if (type == "P") {
-		    precio = document.getElementById("Precio").value;
-		    console.log(this.precio);
-	  }
-	  if (type == "ED") {
-		    edicion = document.getElementById("Edicion").value;
-		    console.log(this.edicion);
-	  }
-	  if (type == "S") {
-	    	sinopsis = document.getElementById("Sinopsis").value;
-	    	console.log(this.sinopsis);
-	  }
-	  if (type == "N") {
-		    npaginas = document.getElementById("numeroPaginas").value;
-		    console.log(this.npaginas);
-	  }
-	  if (type == "C") {
-		    cantidad = document.getElementById("Cantidad").value;
-		    console.log(this.cantidad);
-	  }
-	  if (type == "I") {
-		    imagen = document.getElementById("Imagen").value;
-		    console.log(this.imagen);
 	  }
 	}
 
@@ -295,10 +260,10 @@
             <div class="bg-dark pt-4 px-4 pb-1">
               <p>Contenido de la Página</p>
               <ul class="menu-header">
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="index.html">Inicio</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="catalogo.html">Catalogo</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento.html">Reclutamiento</a></li>
-                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro.html">Regístrate</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="index">Inicio</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="catalogo">Catalogo</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="reclutamiento">Reclutamiento</a></li>
+                <li><img src="img/iconos/pokemon16.png" alt=""> <a href="registro">Regístrate</a></li>
               </ul>
             </div>
           </div>
@@ -366,10 +331,9 @@
         <footer class="site-footer  seccion">
           <div class="container contenedor-footer">
               <nav class="navegacion-footer">
-                  <a href="index.html">Inicio</a>
-                  <a href="catalogo.html">Catalogo</a>
-                  <a href="reclutamiento.html">Reclutamiento</a>
-                  <a href="registro.html">Regístrate</a>
+                  <a href="index">Inicio</a>
+                  <a href="catalogo">Catalogo</a>
+                  <a href="registro">Regístrate</a>
               </nav>
 
               <p class="copyright">Todos los Derechos Reservados Erick y Susan 2020 &copy;</p>
