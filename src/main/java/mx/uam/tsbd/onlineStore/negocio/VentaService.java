@@ -2,6 +2,8 @@ package mx.uam.tsbd.onlineStore.negocio;
 
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -91,7 +93,13 @@ public class VentaService {
 		
 	}
 	
-	public Iterable <Venta> retrivePart(String fechaInferior, String FechaSuperior){
+	public Iterable <Venta> retrivePart(String fechaInferior, String FechaSuperior) throws ParseException{
+		
+		SimpleDateFormat objSDF = new SimpleDateFormat("yyyy-mm-dd");
+		
+		Date aux = objSDF.parse("20-08-1981");
+		
+		//Para imprimir: objSDF.format(dt_1)
 		
 		Iterable <Venta> ventas = ventaRepository.findAll();
 		
