@@ -32,8 +32,8 @@ public class UsuarioService {
 	public Usuario create(Usuario nuevoUsuario) {
 		
 		//Crea su carrito de compras
-		Carrito carrito = new Carrito();
-		nuevoUsuario.setCarrito(carrito);
+		//Carrito carrito = new Carrito();
+		//nuevoUsuario.setCarrito(carrito);
 		
 		Usuario usuario = usuarioRepository.save(nuevoUsuario);
 		log.info("Creando Usuario con id "+usuario.getIdUsuario());

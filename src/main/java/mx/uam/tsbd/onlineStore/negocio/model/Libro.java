@@ -51,7 +51,7 @@ public class Libro {
 	
 	/**
 	 * Para reporte de interesados en el libro
-	 */
+	 *
 	@Builder.Default
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Carritos")
@@ -64,6 +64,8 @@ public class Libro {
 	public boolean quitCarrito(Carrito carrito) {
 		return carritos.remove(carrito);
 	} 
+	*/
+	
 	
 	/**
 	 * Para reporte de ventas totales del libro

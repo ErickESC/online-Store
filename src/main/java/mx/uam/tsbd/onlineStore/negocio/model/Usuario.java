@@ -53,10 +53,15 @@ public class Usuario {
 	@NotBlank
 	private String Direccion;
 	
+	
+	/**
+	 * EN CASO DE HACER EL PROYECTO CON INICIOS DE SESION
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "Carrito")
 	private Carrito carrito;
 
+	*/
+	
 	@Builder.Default
 	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "Compras")

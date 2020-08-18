@@ -35,7 +35,7 @@ public class Venta {
 	
 	@NotNull
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-	@JoinColumn(name = "Carrito")
+	@JoinColumn(name = "Venta")
 	private Usuario Cliente;
 	
 	@NotBlank
@@ -63,6 +63,8 @@ public class Venta {
 		return libros.remove(libro);
 	}
 	
+	/*
+	 * EN CASO DE TENER SESIONES 
 	@Builder.Default
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "carrito")
@@ -71,4 +73,5 @@ public class Venta {
 	public boolean addCarrito(Carrito carrito) {
 		return carritos.add(carrito);
 	}
+	*/
 }

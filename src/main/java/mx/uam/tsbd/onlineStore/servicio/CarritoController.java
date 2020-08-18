@@ -160,7 +160,7 @@ public class CarritoController {
 	 * 
 	 * @param nuevoCarrito
 	 * @return OK si se agrego con exito o No content en caso contrario
-	 */
+	 *
 	@ApiOperation(
 			value = "Agregar un libro a un Carrito",
 			notes = "Permite Agregar un libro a un carrito"
@@ -178,13 +178,14 @@ public class CarritoController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 	}
+	*/
 	
 	/**
 	 * POST /carritos/quit/id del Carrito/libros/id del libro
 	 * 
 	 * @param nuevoCarrito
 	 * @return OK si se elimino con exito o No content en caso contrario
-	 */
+	 *
 	@ApiOperation(
 			value = "Eliminar un libro de un Carrito",
 			notes = "Permite eliminar un libro de un carrito"
@@ -202,4 +203,5 @@ public class CarritoController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 	}
+	*/
 }

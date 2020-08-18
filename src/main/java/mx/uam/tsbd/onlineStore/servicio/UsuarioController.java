@@ -42,16 +42,16 @@ public class UsuarioController {
 			notes = "Permite crear un nuevo Usuario"
 			)
 	@PostMapping(path = "/usuarios", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <?> create(@RequestBody @Valid Usuario nuevoCarrito) {
+	public ResponseEntity <?> create(@RequestBody @Valid Usuario nuevoUsuario) {
 		
-		log.info("Recibí llamada a create con "+ nuevoCarrito);
+		log.info("Recibí llamada a create con "+ nuevoUsuario);
 		
-		Usuario carrito = usuarioService.create(nuevoCarrito);
+		Usuario carrito = usuarioService.create(nuevoUsuario);
 		
 		if(carrito != null) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(carrito);
 		}else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se puede crear el Carrito");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se puede crear el Usuario");
 		}
 	}
 	

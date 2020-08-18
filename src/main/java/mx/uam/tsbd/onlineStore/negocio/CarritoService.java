@@ -119,7 +119,7 @@ public class CarritoService {
 	 * @param carritoId
 	 * @param libroId
 	 * @return
-	 */
+	 *
 	public boolean addLibroToCarrito(Integer carritoId, Integer libroId) {
 		
 		Libro libro = libroService.Retrive(libroId);
@@ -148,13 +148,14 @@ public class CarritoService {
 		
 		return true;
 	}
+	*/
 	
 	/**
 	 * 
 	 * @param carritoId
 	 * @param libroId
 	 * @return
-	 */
+	 *
 	public boolean quitLibroFromCarrito(Integer carritoId, Integer libroId) {
 		
 		Libro libro = libroService.Retrive(libroId);
@@ -181,6 +182,6 @@ public class CarritoService {
 		
 		return true;
 	}
-	
+	*/
 	
 }

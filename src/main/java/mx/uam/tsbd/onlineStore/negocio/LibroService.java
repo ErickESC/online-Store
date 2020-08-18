@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import mx.uam.tsbd.onlineStore.datos.LibroRepository;
 import mx.uam.tsbd.onlineStore.negocio.model.Libro;
+import mx.uam.tsbd.onlineStore.negocio.model.Venta;
 
 
 @Service
@@ -21,6 +22,9 @@ public class LibroService {
 	
 	@Autowired
 	private LibroRepository libroRepository;
+	
+	@Autowired
+	private VentaService ventaService;
 	
 	//Dar alta un libro
 	public Libro Create (Libro nuevoLibro)
@@ -90,6 +94,26 @@ public class LibroService {
 		Double preciolibro=libro.getPrecio();
 		
 		return preciolibro;
+	}
+	
+	public boolean addVentaToLibro(Integer libroId, Integer ventaId) {
+		
+		Venta venta = ventaService.retrive(ventaId);
+		
+		Optional <Libro> usuarioOpt = libroRepository.findById(libroId);
+		
+		if(!usuarioOpt.isPresent() || venta == null) {
+			
+			return false;
+		}
+
+		Libro libro = usuarioOpt.get();
+		libro.addVenta(venta);
+
+		// Persistir el cambio
+		libroRepository.save(libro);
+		
+		return true;
 	}
 	
 	/**

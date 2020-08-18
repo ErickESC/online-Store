@@ -2,12 +2,13 @@ package mx.uam.tsbd.onlineStore.negocio;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import mx.uam.tsbd.onlineStore.datos.VentaRepository;
-import mx.uam.tsbd.onlineStore.negocio.model.Carrito;
+import mx.uam.tsbd.onlineStore.negocio.model.Usuario;
 import mx.uam.tsbd.onlineStore.negocio.model.Venta;
 
 @Service
@@ -17,16 +18,42 @@ public class VentaService {
 	private VentaRepository ventaRepository;
 	
 	@Autowired
-	private CarritoService carritoService;
+	private LibroService libroService;
 	
-	public Venta create(Venta venta)
+	@Autowired
+	private UsuarioService usuarioService;
+	
+	
+	
+	public Venta create(Venta nuevaVenta, Integer idUsuario)
 	{
 		
+		Date fecha = new Date();
 		
-		return ventaRepository.save(venta);
+		nuevaVenta.setFecha(fecha);
+		
+		Usuario usuario = usuarioService.retrive(idUsuario);
+		
+		nuevaVenta.setCliente(usuario);
+		
+		Venta venta = ventaRepository.save(nuevaVenta);
+		
+		usuarioService.addVentaToUsuario(venta.getCliente().getIdUsuario(), venta.getIdVenta());
+		
+		for(int i=0; i<venta.getLibros().size(); i++) {
+			Integer idLibro = venta.getLibros().get(i).getIdLibro();
+			Integer Cantidad = venta.getLibros().get(i).getCantidad();
+			venta.getLibros().get(i).setCantidad(Cantidad--);
+			
+			libroService.addVentaToLibro(idLibro, venta.getIdVenta());
+			libroService.UpdateLibro(idLibro, venta.getLibros().get(i));
+		}
+		
+		return venta;
 	}
 	
-	
+	/*
+	 * EN CASO DE TENER SESIONES
 	public boolean carritoaddVenta(Integer idC,Integer idV)
 	{
 		Carrito carrito=carritoService.retrive(idC);
@@ -39,7 +66,7 @@ public class VentaService {
 			  return false;
 		  }
 		Venta venta =ventaop.get();
-		venta.addCarrito(carrito);
+		//venta.addCarrito(carrito);
 		  
 		  
 		  ventaRepository.save(venta);
@@ -47,8 +74,12 @@ public class VentaService {
 		return true;
 		
 	}
-
-
+	*/
+	
+	public Iterable <Venta> retriveAll(){
+		return ventaRepository.findAll();
+	}
+	
 	public Venta retrive(Integer ventaId) {
        Optional <Venta> ventafind =ventaRepository.findById(ventaId);
 		
@@ -60,7 +91,9 @@ public class VentaService {
 		
 	}
 	
-	
+	public Iterable <Venta> retrivePart(){
+		return ventaRepository.findAll();
+	}
 	
 	public double totalcompraadd(double precio)
 	{
