@@ -91,7 +91,10 @@ public class VentaService {
 		
 	}
 	
-	public Iterable <Venta> retrivePart(){
+	public Iterable <Venta> retrivePart(String fechaInferior, String FechaSuperior){
+		
+		Iterable <Venta> ventas = ventaRepository.findAll();
+		
 		return ventaRepository.findAll();
 	}
 	

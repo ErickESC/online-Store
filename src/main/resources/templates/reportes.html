@@ -26,6 +26,12 @@
 
     <script>
     
+    //URL del API REST
+    var URL = "http://localhost:8080/
+    
+    //Variable que determina el limite inferior de mas vendidos
+    var masVendidos = 5;
+    
  	//Variables globales para guardar los valores de los inputs
  	var objeto= "";
  	var fechaInferior = "";
@@ -35,22 +41,18 @@
  	function guarda(type) {
 	  
 	  if (type == "O") {
-		  	idlibro = document.getElementById("objeto").value;
+		    objeto = document.getElementById("objeto").value;
 	    	console.log(this.objeto);
 	  }
 	  if (type == "FI") {
-		  	autor = document.getElementById("fechaInferior").value;
+		    fechaInferior = document.getElementById("fechaInferior").value;
 		    console.log(this.fechaInferior);
 	  }
 	  if (type == "FS") {
-		  	titulo = document.getElementById("fechaSuperior").value;
+		    fechaSuperior = document.getElementById("fechaSuperior").value;
 		    console.log(this.fechaSuperior);
 	  }
 	}
-
- 	//Variable con la URL principal
- 	var URL = "http://localhost:8080/libros";
- 	
  	
 	$(document).ready(function(){
    		
@@ -67,192 +69,213 @@
 		  //Se actuara de acuerdo al id del boton
 		  switch (ID) {
 					case '1':
-						console.log("Se invoco creaLibro()");
-						creaLibro();
-						break;
-					case '2':
-						console.log("Se invoco actualizaLibro()");
-						actualizaLibro();
-						break;
-					case '3':
-						console.log("Se invoco cargaLibro()");
-						cargaLibro();
-						break;
-					case '4':
-						console.log("Se invoco borraLibro()");
-						borraLibro();
-						break;
-					case '5':
-						console.log("Se invoco Recupera todos()");
-						recuperaTodos();
+						console.log("Se invoco generaReporte()");
+						generaReporte(objeto);
 						break;
 		  }
   		});
-		
-       	function creaLibro(){
-      		
-				$("#contenido").empty();
-				
-				var Libro = JSON.stringify({ autor: this.autor,
-					  						 cantidad: this.cantidad,
-					  						 descripcion: this.sinopsis,
-					  						 edicion: this.edicion,
-					 						 editorial: this.editorial,
-					 						 idLibro: this.idlibro,
-					 						 imagen: this.imagen,
-					 						 noPaginas: this.npaginas,
-					 						 precio: this.precio,
-					 						 titulo: this.titulo							
-											});
-
-				//Imprimimos en consola el json generado
-				console.log(Libro);
-				
-				$.ajax({url: URL, 
-		    		method: 'POST',
-		    		data: Libro,
-		    		success: cargaLibro,
-		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
-		    		     alert("Ocurrion algun error");
-		    		}
-		    	});
-				
-				
- 		}
-		
-       	function actualizaLibro(){
-      		
-				$("#contenido").empty();
-				
-				var url = URL+"/"+this.idlibro;
-				
-				var Libro = JSON.stringify({ idLibro: this.idlibro})
-				
-				//Imprimimos en consola el json generado
-				console.log(Libro);
-				
-				$.ajax({url: url, 
-		    		method: 'PUT',
-		    		data: Libro,
-		    		success: cargaLibro,
-		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
-		    		     alert("Ocurrion algun error");
-		    		}
-		    	});
-				
- 		}
-		
-       	function cargaLibro(){
-       		
-				$("#contenido").empty();
-				
-				$.ajax({url: URL, 
-		    		method: 'GET',
-		    		success: cargaUnLibro,
-		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
-		    		     alert("Ocurrion algun error");
-		    		}
-		    	});
-				
- 		}
-		
-       	function borraLibro(){
-      		
-				$("#contenido").empty();
-				
-				var url = URL+"/"+parseInt(this.idlibro);
-				
-				var libro = JSON.stringify({ idLibro: parseInt(this.idlibro) })
-				
-				$.ajax({url: url, 
-		    		method: 'DELETE',
-		    		data: libro
-		    	});
- 		}
-       	
-       	function recuperaTodos(){
-				  
-					$.ajax({url: URL, 
-	     		    		method: 'GET',
-	     		    		success: cargaLibros,
-	     		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
-	   		    		     alert("Ocurrion algun error");
-	   		    		    }
-	     		    });
-       	}
-
-       	function cargaLibros(Libros){
-  			
-      		// Recorre los objetos
-      		var i;
-            
-      		lista = Libros;
-      		
-      		for (i=0;i<lista.length;i++) {
-	     		var element = lista[i];
-	     		
-         		console.log(element);
-         		
-         		//Se asigna el indice al id del elemento
-      	 		
-         	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
-         		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
-     			
-      	 		+"<div class=\"card-body\">"
-      	 			+"<h5 class=\"card-title\">Precio: "+element.idLibro+"</h5>"
-      	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
-         			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
-         			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
-         			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
-         			+"<p class=\"card-text\">Editorial: "+element.cantidad+"</p>"
-         		+"</div>"
-         		
-                +"<ul class=\"list-group list-group-flush\">"
-                  +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
-                  +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
-                +"</ul>"
-                
-         	   +"</div>")); 
-      		} 
- 		}
-       	
-       	function cargaUnLibro(Libros){
-  			
-      		// Recorre los objetos
-      		var i;
-            
-      		lista = Libros;
-      		
-      		for (i=0;i<lista.length;i++) {
-	     		var element = lista[i];
-	     		
-	     		if(element.idLibro == this.idlibro){
-	     			console.log(element);
-	         		
-	           	  //Se asigna el indice al id del elemento
-	           	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
-	           		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
-	       			
-	        	 		+"<div class=\"card-body\">"
-	        	 			+"<h5 class=\"card-title\">Precio: "+element.idLibro+"</h5>"
-	        	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
-	           			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
-	           			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
-	           			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
-	           			+"<p class=\"card-text\">Editorial: "+element.cantidad+"</p>"
-	           		+"</div>"
-	           		
-	                  +"<ul class=\"list-group list-group-flush\">"
-	                    +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
-	                    +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
-	                  +"</ul>"
-	                  
-	           	   +"</div>")); 
-	     		}
-      		} 
- 		}
 	});
-    
+   		
+   		function generaReporte(type){
+  		  	switch (type) {
+				case "Libros":
+					console.log("Generar reporte de libros");
+					regresaLibros;
+					break;
+				case "Ventas":
+					console.log("Generar reporte de ventas");
+					regresaVentas();
+					break;
+				case "Clientes":
+					console.log("Generar reporte de clientes");
+					regresaClientes();
+					break;
+				default:
+					console.log("No se escogio objeto");
+					break;
+			}
+   		}
+   		
+   		function regresaLibros(){
+   			
+   			var urlLibros = URL+"libros";
+   			
+   			$("#contenido").empty();
+   			
+			$.ajax({url: urlLibros, 
+		    		method: 'GET',
+		    		success: cargaLibros,
+		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
+	    		     alert("Ocurrion algun error");
+	    		    }
+		    });
+   		}
+   		
+       	<!-- Imprime las ventas dentro del lapso solicitado -->
+      	function cargaLibros(Libros){
+       		
+       		$("#contenido").empty();
+       		
+      		// Recorre los objetos
+      		var i;
+            
+      		var lista = Libros;
+      		$("#contenido").append($("<div class=\"container mt-4\">"
+      								+"<h3>Reporte de clientes y sus compras en el lapso dado</h3><br>"
+      									+"<div class=\"row\">"
+      										+"<div style=\"col-sm-8\">"
+      											+"<table class=\"table table-hover\">"
+      												+"<thead>"
+      													+"<tr>"
+      														+"<th>ID</th>"
+      														+"<th>Imagen</th>"
+      														+"<th>Titulo</th>"
+      														+"<th>No. Ventas</th>"
+      													+"</tr>"
+      												+"</thead>"
+      												+"<tbody id=\"elementos\">"));
+      									      		for (i=0;i<lista.length;i++) {
+      										     		var element = lista[i];
+      									         		console.log(element);
+      									         		
+      									         		//Agregar logica para fechas de las venta
+      									         		
+      								$("#elementos").append($("<tr>"
+      														+"<td align=\"center\">"+element.idLibro+"</td>"
+  															+"<td align=\"center\">"+"<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"+"</td>"
+  															+"<td align=\"center\">"+element.titulo+"</td>"
+  															+"<td align=\"center\">"+element.ventas.lenght+"</td>"
+  														+"</tr>"));
+      									      		}
+      					$("#contenido").append($("</tbody>"
+      											+"</table>"
+      										+"</div>"
+      									+"</div>"
+      								+"</div>"));
+ 		}
+   		
+   		function regresaVentas(){
+   			
+   			var urlVentas = URL+"search/ventas/"+fechaInferior+"/"+fechaSuperior+"";
+   			
+   			$("#contenido").empty();
+   			
+			$.ajax({url: urlVentas, 
+		    		method: 'GET',
+		    		success: cargaVentas,
+		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
+	    		     alert("Ocurrion algun error");
+	    		    }
+		    });
+   		}
+   		
+       	<!-- Imprime las ventas dentro del lapso solicitado -->
+      	function cargaVentas(ventas){
+       		
+       		$("#contenido").empty();
+       		
+      		// Recorre los objetos
+      		var i;
+            
+      		var lista = ventas;
+      		$("#contenido").append($("<div class=\"container mt-4\">"
+      								+"<h3>Reporte de clientes y sus compras en el lapso dado</h3><br>"
+      									+"<div class=\"row\">"
+      										+"<div style=\"col-sm-8\">"
+      											+"<table class=\"table table-hover\">"
+      												+"<thead>"
+      													+"<tr>"
+      														+"<th>ID</th>"
+      														+"<th>Cliente</th>"
+      														+"<th>Fecha</th>"
+      														+"<th>Cantidad</th>"
+      														+"<th>Total</th>"
+      													+"</tr>"
+      												+"</thead>"
+      												+"<tbody id=\"elementos\">"));
+      									      		for (i=0;i<lista.length;i++) {
+      										     		var element = lista[i];
+      									         		console.log(element);
+      									         		
+      									         		//Agregar logica para fechas de las venta
+      									         		
+      								$("#elementos").append($("<tr>"
+  															+"<td align=\"center\">"+element.idVenta+"</td>"
+  															+"<td align=\"center\">"+element.cliente.idusuario+"</td>"
+  															+"<td align=\"center\">"+element.fecha+"</td>"
+  															+"<td align=\"center\">"+element.libros.lenght+"</td>"
+  															+"<td align=\"center\">"+element.total+"</td>"
+  														+"</tr>"));
+      									      		}
+      					$("#contenido").append($("</tbody>"
+      											+"</table>"
+      										+"</div>"
+      									+"</div>"
+      								+"</div>"));
+ 		}
+   		
+   		function regresaClientes(){
+   			
+   			var urlClientes = URL+"clientes";
+   			
+   			$("#contenido").empty();
+   			
+			$.ajax({url: urlClientes, 
+		    		method: 'GET',
+		    		success: cargaClientes,
+		    		error: function(XMLHttpRequest, textStatus, errorThrown) {
+	    		     alert("Ocurrion algun error");
+	    		    }
+		    });
+   		}
+   		
+       	<!-- Imprime los Clientes -->
+      	function cargaClientes(clientes){
+       		
+       		$("#contenido").empty();
+       		
+      		// Recorre los objetos
+      		var i;
+            
+      		var lista = clientes;
+      		$("#contenido").append($("<div class=\"container mt-4\">"
+      								+"<h3>Reporte de clientes y sus compras en el lapso dado</h3><br>"
+      									+"<div class=\"row\">"
+      										+"<div style=\"col-sm-8\">"
+      											+"<table class=\"table table-hover\">"
+      												+"<thead>"
+      													+"<tr>"
+      														+"<th>ID</th>"
+      														+"<th>NOMBRE</th>"
+      														+"<th>APELLIDOS</th>"
+      														+"<th>Correo</th>"
+      														+"<th>No. Compras</th>"
+      													+"</tr>"
+      												+"</thead>"
+      												+"<tbody id=\"elementos\">"));
+      									      		for (i=0;i<lista.length;i++) {
+      										     		var element = lista[i];
+      									         		console.log(element);
+      									      			
+      									         		console.log(element.compras[0].fecha);
+      									         		
+      									         		//Agregar logica para fechas de las venta
+      									         		
+      								$("#elementos").append($("<tr>"
+  															+"<td align=\"center\">"+element.idUsuario+"</td>"
+  															+"<td align=\"center\">"+element.nombre+"</td>"
+  															+"<td align=\"center\">"+element.apellidoPaterno+" "+element.apellidoMaterno+"</td>"
+  															+"<td align=\"center\">"+element.correo+"</td>"
+  															+"<td align=\"center\">"+element.compras.length+"</td>"
+  														+"</tr>"));
+      									      		}
+      					$("#contenido").append($("</tbody>"
+      											+"</table>"
+      										+"</div>"
+      									+"</div>"
+      								+"</div>"));
+ 		}
+   		
     </script>
 	
       <div class="sticky-top site-header">
@@ -282,15 +305,19 @@
 
             <h3 class="centrar-texto">Libros</h3>
 
-                    <label for="objeto">De que generará el reporte?:</label>
-                    <input type="number" id="objeto"  onkeyup="guarda('O')">
+                   <label for="objeto">De que generará el reporte?:</label>
+                   <select id="objeto" onchange="guarda('O')">
+                        <option value="" disabled selected>--Seleccione--</option>
+                        <option value="Libros" >Libros</option>
+                        <option value="Ventas">Ventas</option>
+                        <option value="Clientes">Clientes</option>
+                    </select>
                     
                     <label for="fechaInferior">Limite Inferior:</label>
-                    <input type="number" id="fechaInferior" onkeyup="guarda('FI')">
+                    <input type="date" id="fechaInferior" onchange="guarda('FI')">
 
                     <label for="fechaSuperior">Limite Superior:</label>
-                    <input type="text" id="fechaSuperior" onkeyup="guarda('FS')">
-                
+                    <input type="date" id="fechaSuperior" onchange="guarda('FS')">
 
                 <button id="1" class="boton boton-rojo">Generar</button>
                                 <br><br>
@@ -298,7 +325,8 @@
         
         <div class="container contenedor-principal my-5" id="contenido">
 			<h2 class="centrar-texto">Vista Predeterminada</h2>
-				<!-- LISTA Libros -->
+				
+				<!-- LISTA DE OBJETOS SOLICITADOS -->
             
         </div>
         
@@ -319,6 +347,6 @@
         <!-- Popper.js,  Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
- 
+        
     </body>
 </html>

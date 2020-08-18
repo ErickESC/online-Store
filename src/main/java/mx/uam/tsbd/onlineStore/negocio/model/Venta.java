@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -33,12 +32,10 @@ public class Venta {
 	@GeneratedValue
 	private Integer IdVenta;
 	
-	@NotNull
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "Venta")
 	private Usuario Cliente;
 	
-	@NotBlank
 	private Date Fecha;
 	
 	@NotNull

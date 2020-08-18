@@ -80,7 +80,7 @@ public class VentaController {
 	@GetMapping(path = "/search/ventas/{inferior}/{superior}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity <?> retrievePart(@PathVariable("inferior") @Valid String inferior, @PathVariable("superior") @Valid String superior) {
 		
-		Iterable <Venta> result = ventaService.retriveAll();
+		Iterable <Venta> result = ventaService.retrivePart(inferior, superior);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 		
