@@ -31,6 +31,7 @@
     	<script>
     	
     	var idUsuario="";
+    	var busqueda="";
     	
     	var iva=0.16;
     	<!--  Contador de objetos en el carrito -->
@@ -49,6 +50,10 @@
      			  	idlibro = document.getElementById("idUsuario").value;
      		    	console.log(this.idUsuario);
      		  }
+     		 if (type == "B") {
+  			  	idlibro = document.getElementById("search").value;
+  		    	console.log(this.busqueda);
+  		  }
      	}
     	
     	$(document).ready(function(){
@@ -68,6 +73,10 @@
     						case '4':
     							console.log("Ver Carrito");
     							verCarrito();
+    							break;
+    						case '7':
+    							console.log("Busqueda");
+    							search();
     							break;
     			  }
     	  		});
@@ -119,6 +128,46 @@
 			  }
     		});
     	}
+    	
+    	function search(){
+    		cargaUnLibro(busqueda);
+    	}
+    	
+       	function cargaUnLibro(busqueda){
+       		$("#contenido").empty();
+      		// Recorre los objetos
+      		var i;
+            
+      		lista = listaDeLibros;
+      		
+      		for (i=0;i<lista.length;i++) {
+	     		var element = lista[i];
+	     		
+	     		if(element.titulo == this.busqueda){
+	     			console.log(element);
+	         		
+	           	  //Se asigna el indice al id del elemento
+	           	  $("#contenido").append($("<div class=\"card estilo-carta\" id=\""+i+"\">"));
+	           		$("#"+i).append($("<img src=\""+element.imagen+"\" class=\"card-img-top\" alt=\"...\">"
+	       			
+	        	 		+"<div class=\"card-body\">"
+	        	 			+"<h5 class=\"card-title\">Precio: "+element.precio+"</h5>"
+	           			+"<h5 class=\"card-title\">Titulo: "+element.titulo+"</h5>"
+	           			+"<p class=\"card-text\">Autor: "+element.autor+"</p>"
+	           			+"<p class=\"card-text\">Editorial: "+element.editorial+"</p>"
+	           			+"<p class=\"card-text\">Editorial: "+element.cantidad+"</p>"
+	           		+"</div>"
+	           		
+	                  +"<ul class=\"list-group list-group-flush\">"
+	                    +"<li class=\"list-group-item\">Paginas: "+element.noPaginas+" Edicion: "+element.edicion+"</li>"
+	                    +"<li class=\"list-group-item\">Sinopsis: "+element.descripcion+"</li>"
+	                  +"</ul>"
+	                  
+	           	   +"</div>")); 
+	     		}
+      		} 
+ 		}
+	});
     	
     	function RealizarCompra(){
     		
@@ -183,6 +232,7 @@
     		cargaCarrito(listaDeCarrito);
     	}
     	
+    	<!-- Imprime los libros -->
        	function cargaLibros(Libros){
        		
        		$("#contenido").empty();
@@ -226,6 +276,7 @@
        		botonesAccion();
  		}
        	
+       	<!-- Imprime los libros que hay en el carrito -->
       	function cargaCarrito(Libros){
        		
        		$("#contenido").empty();
@@ -323,8 +374,8 @@
       		</div>
 			<h2 class="titulo-principal">Changarro!</h2>  
 				<form class="form-inline my-2 my-lg-0">
-      				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      				<input class="form-control mr-sm-2" value="Titulo" type="search" placeholder="Search" aria-label="Search" onkeyup="guarda('B')">
+      				<button id="7" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
    				</form>
           </nav>
         </div>
