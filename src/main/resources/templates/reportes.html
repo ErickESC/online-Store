@@ -27,24 +27,24 @@
     <script>
     
  	//Variables globales para guardar los valores de los inputs
- 	var objeto= "ID sin definir";
- 	var autor = "Autor sin definir";
- 	var titulo = "Titulo sin definir";
+ 	var objeto= "";
+ 	var fechaInferior = "";
+ 	var fechaSuperior = "";
  	
  	//Guardamos los valores de los inputs
  	function guarda(type) {
 	  
-	  if (type == "IL") {
-		  	idlibro = document.getElementById("idLibro").value;
-	    	console.log(this.idlibro);
+	  if (type == "O") {
+		  	idlibro = document.getElementById("objeto").value;
+	    	console.log(this.objeto);
 	  }
-	  if (type == "A") {
-		  	autor = document.getElementById("Autor").value;
-		    console.log(this.autor);
+	  if (type == "FI") {
+		  	autor = document.getElementById("fechaInferior").value;
+		    console.log(this.fechaInferior);
 	  }
-	  if (type == "T") {
-		  	titulo = document.getElementById("Titulo").value;
-		    console.log(this.titulo);
+	  if (type == "FS") {
+		  	titulo = document.getElementById("fechaSuperior").value;
+		    console.log(this.fechaSuperior);
 	  }
 	}
 
@@ -282,43 +282,19 @@
 
             <h3 class="centrar-texto">Libros</h3>
 
-                    <label for="idLibro">ID del Libro:</label>
-                    <input type="number" id="idLibro"  onkeyup="guarda('IL')">
+                    <label for="objeto">De que generará el reporte?:</label>
+                    <input type="number" id="objeto"  onkeyup="guarda('O')">
                     
-                    <label for="Cantidad">Cantidad:</label>
-                    <input type="number" id="Cantidad" onkeyup="guarda('C')">
+                    <label for="fechaInferior">Limite Inferior:</label>
+                    <input type="number" id="fechaInferior" onkeyup="guarda('FI')">
 
-                    <label for="Autor">Autor:</label>
-                    <input type="text" id="Autor" onkeyup="guarda('A')">
-                    
-                    <label for="Titulo">Titulo:</label>
-                    <input type="text" id="Titulo" onkeyup="guarda('T')">
-
-                    <label for="Editorial">Editorial:</label>
-                    <input type="text" id="Editorial" onkeyup="guarda('E')">
-
-                    <label for="Precio">Precio:</label>
-                    <input type="number" id="Precio" onkeyup="guarda('P')">
-
-                    <label for="Edicion">Edición:</label>
-                    <input type="number" id="Edicion" onkeyup="guarda('ED')">
-
-                    <label for="numeroPaginas">Número de paginas:</label>
-                    <input type="number" id="numeroPaginas" onkeyup="guarda('N')">
-                    
-                    <label for="Imagen">Imagen:</label>
-                    <input type="text" id="Imagen" onkeyup="guarda('I')">
-
-                    <label for="Sinopsis">Sinopsis:</label>
-                    <input type="text" id="Sinopsis" min="1" max="890" step="1" onkeyup="guarda('S')">
-
+                    <label for="fechaSuperior">Limite Superior:</label>
+                    <input type="text" id="fechaSuperior" onkeyup="guarda('FS')">
                 
 
-                <button id="1" class="boton boton-rojo">Registrar</button>
-                <button id="2" class="boton boton-rojo">Actualizar</button>
-                <button id="3" class="boton boton-rojo">Buscar</button>
-                <button id="5" class="boton boton-verde">Todos</button>
-                <button id="4" class="boton boton-azul">Borrar</button>
+                <button id="1" class="boton boton-rojo">Generar</button>
+                                <br><br>
+                <a class="boton boton-gris" href="administradorMain">Volver</a>
         
         <div class="container contenedor-principal my-5" id="contenido">
 			<h2 class="centrar-texto">Vista Predeterminada</h2>
