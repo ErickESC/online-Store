@@ -140,18 +140,32 @@ public class LibroService {
 		libros.add(libro1);
 		
 		Libro libro2 = new Libro();
-		libro2.setAutor("Haruki Murakami");
+		libro2.setAutor("JRR Tolkien");
 		libro2.setCantidad(30);
-		libro2.setDescripcion("En marzo de 1983, el joven protagonista de esta novela siente la necesidad de viajar a Sapporo para volver a alojarse en el Hotel Delfín, donde años atrás pasó una semana con una misteriosa mujer.");
+		libro2.setDescripcion("La historia del mundo antiguo");
 		libro2.setEdicion(1);
-		libro2.setEditorial("Tusquets Editores");
-		libro2.setIdLibro(110);
-		libro2.setImagen("https://cdn.gandhi.com.mx/media/catalog/product/cache/1/image/370x/9df78eab33525d08d6e5fb8d27136e95/i/m/image_1165_1_61080.jpg");
-		libro2.setNoPaginas(464);
-		libro2.setPrecio(150.0);
-		libro2.setTitulo("Baila, Baila, Baila");
+		libro2.setEditorial("Booket");
+		libro2.setIdLibro(330);
+		libro2.setImagen("https://cdn.gandhi.com.mx/media/catalog/product/cache/1/image/370x/9df78eab33525d08d6e5fb8d27136e95/i/m/image_1165_1_60716.jpg");
+		libro2.setNoPaginas(430);
+		libro2.setPrecio(210.0);
+		libro2.setTitulo("Simarilion");
 		
 		libros.add(libro2);	
+		
+		Libro libro3 = new Libro();
+		libro3.setAutor("Haruki Murakami");
+		libro3.setCantidad(30);
+		libro3.setDescripcion("En marzo de 1983, el joven protagonista de esta novela siente la necesidad de viajar a Sapporo para volver a alojarse en el Hotel Delfín, donde años atrás pasó una semana con una misteriosa mujer.");
+		libro3.setEdicion(1);
+		libro3.setEditorial("Tusquets Editores");
+		libro3.setIdLibro(110);
+		libro3.setImagen("https://cdn.gandhi.com.mx/media/catalog/product/cache/1/image/370x/9df78eab33525d08d6e5fb8d27136e95/i/m/image_1165_1_61080.jpg");
+		libro3.setNoPaginas(464);
+		libro3.setPrecio(150.0);
+		libro3.setTitulo("Baila, Baila, Baila");
+		
+		libros.add(libro3);	
 		
 		for(int i=0; i<libros.size(); i++) {
 			libroRepository.save(libros.get(i));
