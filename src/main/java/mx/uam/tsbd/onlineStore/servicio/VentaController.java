@@ -1,5 +1,7 @@
 package mx.uam.tsbd.onlineStore.servicio;
 
+import java.text.ParseException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,13 +74,14 @@ public class VentaController {
 	/**
 	 * @param limite inferior y limite superior
 	 * @return status ok y lista de Ventas en un lapso de tiempo
+	 * @throws ParseException 
 	 */
 	@ApiOperation(
 			value = "Regresa todas las Ventas realizadas en un lapso de tiempo",
 			notes = "Regresa un json con una lista de las Ventas en la BD"
 			)
 	@GetMapping(path = "/search/ventas/{inferior}/{superior}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <?> retrievePart(@PathVariable("inferior") @Valid String inferior, @PathVariable("superior") @Valid String superior) {
+	public ResponseEntity <?> retrievePart(@PathVariable("inferior") @Valid String inferior, @PathVariable("superior") @Valid String superior) throws ParseException {
 		
 		Iterable <Venta> result = ventaService.retrivePart(inferior, superior);
 		

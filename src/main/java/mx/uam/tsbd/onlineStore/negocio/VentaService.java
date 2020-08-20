@@ -103,7 +103,7 @@ public class VentaService {
 		
 		Iterable <Venta> ventas = ventaRepository.findAll();
 		
-		return ventaRepository.findAll();
+		return ventas;
 	}
 	
 	public double totalcompraadd(double precio)
